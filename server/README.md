@@ -1,1 +1,0 @@
-Week1 : Presentation "https://docs.google.com/presentation/d/1Vyc5DkEKeifF-f9trUsZopfk8m-P8-V8m8yaVnnmuIM/edit#slide=id.g11817ca76f_2_6"
