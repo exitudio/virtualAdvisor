@@ -5,7 +5,7 @@ var MongoPool = rootRequire("libs/mongo-pool.js");
 /* Department. */
 router.get('/', function(req, res, next) {    
     MongoPool.getInstance(function (db){
-        var collection = db.collection('department');
+        var collection = db.collection('departments');
         collection.find().toArray(function(err, items) {
             res.send(items);
         });          
