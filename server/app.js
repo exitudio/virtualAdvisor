@@ -16,13 +16,18 @@ var users = require('./routes/users');
 /* mongodb init */
 require("./libs/mongo-pool.js").initPool();
 
+//passport-local
+var passport = require('passport');
+var flash    = require('connect-flash');
+
+//express
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-//app.engine('ejs', engine); //ejs
-//app.set('view engine', 'ejs'); //ejs
+//app.set('view engine', 'jade');
+app.engine('ejs', engine); //ejs
+app.set('view engine', 'ejs'); //ejs
 
 
 // uncomment after placing your favicon in /public
@@ -34,12 +39,25 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+/******************************************
+ **************** set port ********************
+ ******************************************/
+var listener = app.listen(3000, function(){
+    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
+
+
+/******************************************
+ **************** passport ********************
+ ******************************************/
+
 /******************************************
 **************** ROUTE ********************
 ******************************************/
 app.use('/', routes);
 app.use('/users', users);
-
+//app.use('/login', require('./routes/login'));
 //api
 app.use('/api/departments', require('./routes/api/departments'));
 
