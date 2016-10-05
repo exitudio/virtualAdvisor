@@ -6,21 +6,20 @@ var mongo = require('mongodb');
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
 /* Department. */
-router.get('/', function(req, res, next) {    
+router.get('/', function(req, res, next) {
     MongoPool.getInstance(function (db){
-<<<<<<< Updated upstream
+
         var collection = db.collection('departments');
         collection.find().toArray(function(err, items) {
-=======
-        db.collection('departments').find().toArray(function(err, items) {
->>>>>>> Stashed changes
-            res.send(items);
-        });          
-    });    
+            db.collection('departments').find().toArray(function(err, items) {
+                res.send(items);
+            });
+        });
+    });
 }).post(function(req, res) {});
 
 /* Courses. */
-router.get('/courses/:departmentIdOrName', function(req, res, next) {    
+router.get('/courses/:departmentIdOrName', function(req, res, next) {
     MongoPool.getInstance(function (db){
         var departmentIdOrName = req.params.departmentIdOrName;
 
@@ -33,7 +32,7 @@ router.get('/courses/:departmentIdOrName', function(req, res, next) {
         db.collection('courses').find(findObject).toArray(function(err, items) {
             res.send(items);
         });
-    });    
+    });
 }).post(function(req, res) {});
 
 
