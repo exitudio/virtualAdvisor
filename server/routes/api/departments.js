@@ -8,14 +8,12 @@ var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 /* Department. */
 router.get('/', function(req, res, next) {    
     MongoPool.getInstance(function (db){
-<<<<<<< Updated upstream
         var collection = db.collection('departments');
         collection.find().toArray(function(err, items) {
-=======
         db.collection('departments').find().toArray(function(err, items) {
->>>>>>> Stashed changes
             res.send(items);
-        });          
+        });
+});		
     });    
 }).post(function(req, res) {});
 

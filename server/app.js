@@ -43,8 +43,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 /******************************************
  **************** set port ********************
  ******************************************/
-var listener = app.listen(3000, function(){
+var listener = app.listen(6246, function(){
     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
+
+//View the Front End Html Pages
+app.get('/Student', function (req, res) {
+    res.sendfile('StudentPage.html');
 });
 
 
