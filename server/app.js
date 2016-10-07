@@ -2,6 +2,7 @@ global.rootRequire = function(name) {
     return require(__dirname + '/' + name);
 }
 var express = require('express');
+//var session = require('express-session');//express-session
 var engine = require('ejs-locals'); //ejs
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -14,11 +15,26 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 /* mongodb init */
-require("./libs/mongo-pool.js").initPool();
+//require("./libs/mongo-pool.js").initPool();
+var mongoose = require('mongoose');
+var options = {
+  db: { native_parser: true },
+  server: { poolSize: 5 },
+  replset: { rs_name: 'myReplicaSetName' },
+  user: 'VA',
+  pass: 'Stevens@VA.776'
+}
+mongoose.connect("mongodb://ds021166.mlab.com:21166/virtualadvisor", options);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("Establish database connection successfully.");
+});
 
-//passport-local
+//passport-local (for login module )
 var passport = require('passport');
 var flash    = require('connect-flash');
+require('./config/passport');
 
 //express
 var app = express();
@@ -43,8 +59,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 /******************************************
  **************** set port ********************
  ******************************************/
+<<<<<<< HEAD
 var listener = app.listen(6246, function(){
     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+=======
+var listener = app.listen(3000, function(){
+    console.log('Listening on port ' + listener.address().port); //Listening on port 3000
+>>>>>>> origin/master
 });
 
 //View the Front End Html Pages
@@ -56,6 +77,11 @@ app.get('/Student', function (req, res) {
 /******************************************
  **************** passport ********************
  ******************************************/
+//app.use(session({ secret: 'welovejamesrowland' })); // session secret
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
+//app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 /******************************************
 **************** ROUTE ********************
