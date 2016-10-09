@@ -15,10 +15,14 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 /* mongodb init */
+<<<<<<< HEAD
 //require("./libs/mongo-pool.js").initPool();
 //require("./libs/mongo-pool.js").initPool();
 require("./libs/mongoose-init");
 
+=======
+require("./libs/mongo-pool.js").initPool();
+>>>>>>> parent of 0ab5483... change to mongoose driver
 /*var mongoose = require('mongoose');
 var options = {
   db: { native_parser: true },

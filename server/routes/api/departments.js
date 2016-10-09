@@ -20,7 +20,11 @@ router.get('/', function(req, res, next) {
     });    
 =======*/
 router.get('/', function(req, res, next) {
+<<<<<<< HEAD
     /*MongoPool.getInstance(function (db){
+=======
+    MongoPool.getInstance(function (db){
+>>>>>>> parent of 0ab5483... change to mongoose driver
 
         var collection = db.collection('departments');
         collection.find().toArray(function(err, items) {
@@ -28,9 +32,13 @@ router.get('/', function(req, res, next) {
                 res.send(items);
             });
         });
+<<<<<<< HEAD
     };*/
     mongoose.connection.db.collection('courses', action);
 
+=======
+    });
+>>>>>>> parent of 0ab5483... change to mongoose driver
 }).post(function(req, res) {});
 
 /* Courses. */
