@@ -1,8 +1,8 @@
 global.rootRequire = function(name) {
-    return require(__dirname + '/' + name);
+  return require(__dirname + '/' + name);
 }
 var express = require('express');
-var session = require('express-session');//express-session
+//var session = require('express-session');//express-session
 var engine = require('ejs-locals'); //ejs
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -15,23 +15,9 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 /* mongodb init */
-<<<<<<< HEAD
-//require("./libs/mongo-pool.js").initPool();
 //require("./libs/mongo-pool.js").initPool();
 require("./libs/mongoose-init");
 
-=======
-require("./libs/mongo-pool.js").initPool();
->>>>>>> parent of 0ab5483... change to mongoose driver
-/*var mongoose = require('mongoose');
-var options = {
-  db: { native_parser: true },
-  server: { poolSize: 5 },
-  replset: { rs_name: 'myReplicaSetName' },
-  user: 'VA',
-  pass: 'Stevens@VA.776'
-}
-mongoose.connect("mongodb://ds021166.mlab.com:21166/virtualadvisor", options);*/
 
 //passport-local (for login module )
 var passport = require('passport');
@@ -58,36 +44,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-/******************************************
- **************** set port ********************
- ******************************************/
-
-
-//View the Front End Html Pages
-app.get('/Student', function (req, res) {
-    res.sendfile('StudentPage.html');
-});
 
 
 
 /******************************************
  **************** passport ********************
  ******************************************/
-app.use(session({ secret: 'welovejamesrowland' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+//app.use(session({ secret: 'welovejamesrowland' })); // session secret
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
+//app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 /******************************************
-**************** ROUTE ********************
-******************************************/
+ **************** ROUTE ********************
+ ******************************************/
 app.use('/', routes);
 app.use('/users', users);
 //app.use('/login', require('./routes/login'));
 //api
 app.use('/api/departments', require('./routes/api/departments'));
 
+//View the Front End Html Pages
+app.get('/Student', function (req, res) {
+  res.sendfile('StudentPage.html');
+});
 
 
 

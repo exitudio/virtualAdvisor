@@ -20,6 +20,6 @@ db.once('open', function() {
 /******************************************
  **************** set port ********************
  ******************************************/
-var listener = app.listen(6246, function(){
+/*var listener = app.listen(3000, function(){
     console.log('Listening on port ' + listener.address().port); //Listening on port 3000
-});
+});*/

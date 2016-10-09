@@ -1,44 +1,19 @@
 var express = require('express');
 var router = express.Router();
-//var MongoPool = rootRequire("libs/mongo-pool.js");
-var mongoose = require('mongoose');
 var MongoPool = rootRequire("libs/mongo-pool.js");
 var mongo = require('mongodb');
+var mongoose = require('mongoose');
 
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
 /* Department. */
-/*
-router.get('/', function(req, res, next) {    
-    MongoPool.getInstance(function (db){
-        var collection = db.collection('departments');
-        collection.find().toArray(function(err, items) {
-        db.collection('departments').find().toArray(function(err, items) {
-            res.send(items);
-        });
-});		
-    });    
-=======*/
 router.get('/', function(req, res, next) {
-<<<<<<< HEAD
-    /*MongoPool.getInstance(function (db){
-=======
-    MongoPool.getInstance(function (db){
->>>>>>> parent of 0ab5483... change to mongoose driver
-
-        var collection = db.collection('departments');
-        collection.find().toArray(function(err, items) {
-            db.collection('departments').find().toArray(function(err, items) {
-                res.send(items);
-            });
+    var action = function (err, collection) {
+        collection.find().toArray(function(err, results) {
+            res.send(results);
         });
-<<<<<<< HEAD
-    };*/
-    mongoose.connection.db.collection('courses', action);
-
-=======
-    });
->>>>>>> parent of 0ab5483... change to mongoose driver
+    };
+    mongoose.connection.db.collection('Courses', action);
 }).post(function(req, res) {});
 
 /* Courses. */
@@ -47,29 +22,16 @@ router.get('/courses/:departmentIdOrName', function(req, res, next) {
 
     var findObject;
     if( checkForHex.test(departmentIdOrName) ){
-        findObject = {"department.id":mongoose.Types.ObjectId(departmentIdOrName)};
+        findObject = {"department.id":new mongo.ObjectID(departmentIdOrName)};
     }else{
         findObject = {"department.name":departmentIdOrName};
     }
 
-    mongoose.connection.db.collection('courses', function (err, collection) {
+    mongoose.connection.db.collection('Courses', function (err, collection) {
         collection.find(findObject).toArray(function(err, results) {
             res.send(results);
         });
     });
-    /*MongoPool.getInstance(function (db){
-        var departmentIdOrName = req.params.departmentIdOrName;
-
-        var findObject;
-        if( checkForHex.test(departmentIdOrName) ){
-            findObject = {"department.id":new mongo.ObjectID(departmentIdOrName)};
-        }else{
-            findObject = {"department.name":departmentIdOrName};
-        }
-        db.collection('courses').find(findObject).toArray(function(err, items) {
-            res.send(items);
-        });
-    });*/
 }).post(function(req, res) {});
 
 
