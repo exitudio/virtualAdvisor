@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
-<<<<<<< HEAD
 //var MongoPool = rootRequire("libs/mongo-pool.js");
 var mongoose = require('mongoose');
-=======
 var MongoPool = rootRequire("libs/mongo-pool.js");
 var mongo = require('mongodb');
->>>>>>> parent of 0ab5483... change to mongoose driver
 
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
@@ -23,7 +20,7 @@ router.get('/', function(req, res, next) {
     });    
 =======*/
 router.get('/', function(req, res, next) {
-    MongoPool.getInstance(function (db){
+    /*MongoPool.getInstance(function (db){
 
         var collection = db.collection('departments');
         collection.find().toArray(function(err, items) {
@@ -31,18 +28,13 @@ router.get('/', function(req, res, next) {
                 res.send(items);
             });
         });
-<<<<<<< HEAD
-    };
+    };*/
     mongoose.connection.db.collection('courses', action);
 
-=======
-    });
->>>>>>> parent of 0ab5483... change to mongoose driver
 }).post(function(req, res) {});
 
 /* Courses. */
 router.get('/courses/:departmentIdOrName', function(req, res, next) {
-<<<<<<< HEAD
     var departmentIdOrName = req.params.departmentIdOrName;
 
     var findObject;
@@ -55,8 +47,9 @@ router.get('/courses/:departmentIdOrName', function(req, res, next) {
     mongoose.connection.db.collection('courses', function (err, collection) {
         collection.find(findObject).toArray(function(err, results) {
             res.send(results);
-=======
-    MongoPool.getInstance(function (db){
+        });
+    });
+    /*MongoPool.getInstance(function (db){
         var departmentIdOrName = req.params.departmentIdOrName;
 
         var findObject;
@@ -67,9 +60,8 @@ router.get('/courses/:departmentIdOrName', function(req, res, next) {
         }
         db.collection('courses').find(findObject).toArray(function(err, items) {
             res.send(items);
->>>>>>> parent of 0ab5483... change to mongoose driver
         });
-    });
+    });*/
 }).post(function(req, res) {});
 
 
