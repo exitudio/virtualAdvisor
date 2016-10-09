@@ -44,26 +44,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-<<<<<<< HEAD
-
-=======
 /******************************************
  **************** set port ********************
  ******************************************/
-<<<<<<< HEAD
-var listener = app.listen(6246, function(){
-    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-=======
-var listener = app.listen(3000, function(){
-    console.log('Listening on port ' + listener.address().port); //Listening on port 3000
->>>>>>> origin/master
-});
+
 
 //View the Front End Html Pages
 app.get('/Student', function (req, res) {
     res.sendfile('StudentPage.html');
 });
->>>>>>> origin/master
+
 
 
 /******************************************
