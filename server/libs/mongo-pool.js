@@ -8,16 +8,6 @@
 * $ mongo ds021166.mlab.com:21166/virtualadvisor -u VA -p Stevens@VA.776
 **/
 
-/************ EXAMPLE ***********
- MongoPool.getInstance(function (db){
-   var collection = db.collection('departments');
-   collection.find().toArray(function(err, items) {
-    db.collection('departments').find().toArray(function(err, items) {
-      res.send(items);
-    });
-   });
- });*/
-
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://ds021166.mlab.com:21166/virtualadvisor"; //remote
 //var url = "mongodb://localhost:27017/virtualadvisor"; //local
