@@ -6,6 +6,17 @@ var mongoose = require('mongoose');
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
 /* Department. */
+<<<<<<< HEAD
+router.get('/', function(req, res, next) {    
+    MongoPool.getInstance(function (db){
+        var collection = db.collection('departments');
+        collection.find().toArray(function(err, items) {
+        db.collection('departments').find().toArray(function(err, items) {
+            res.send(items);
+        });
+});		
+    });    
+=======
 router.get('/', function(req, res, next) {
     var action = function (err, collection) {
         collection.find().toArray(function(err, results) {
@@ -13,6 +24,7 @@ router.get('/', function(req, res, next) {
         });
     };
     mongoose.connection.db.collection('courses', action);
+>>>>>>> origin/master
 }).post(function(req, res) {});
 
 /* Courses. */
