@@ -4,7 +4,7 @@
             code:"SSW 555",
             name:"Agile",
             description:"Agile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile DescriptionAgile Description",
-            department:{
+            major:{
                 id:ObjectId('57f01c07bb443dee2f706132'),
                 name:"Software Engineering"
             }
@@ -13,7 +13,7 @@
             code:"SSW 540",
             name:"Software Engineering",
             description:"Software Engineering DescriptionSoftware Engineering DescriptionSoftware Engineering DescriptionSoftware Engineering DescriptionSoftware Engineering DescriptionSoftware Engineering DescriptionSoftware Engineering Description",
-            department:{
+            major:{
                 id:ObjectId('57f01c07bb443dee2f706132'),
                 name:"Software Engineering"
             }
@@ -22,7 +22,7 @@
             code:"SSW 564",
             name:"Software Requirements Analysis and Engineering",
             description:"Software Requirements Analysis and EngineeringSoftware Requirements Analysis and EngineeringSoftware Requirements Analysis and EngineeringSoftware Requirements Analysis and EngineeringSoftware Requirements Analysis and EngineeringSoftware Requirements Analysis and EngineeringSoftware Requirements Analysis and Engineering",
-            department:{
+            major:{
                 id:ObjectId('57f01c07bb443dee2f706132'),
                 name:"Software Engineering"
             }
@@ -31,7 +31,7 @@
             code:"FE 610",
             name:"Stochastic Calculus for Financial Engineers",
             description:"SStochastic Calculus for Financial EngineersStochastic Calculus for Financial EngineersStochastic Calculus for Financial EngineersStochastic Calculus for Financial EngineersStochastic Calculus for Financial EngineersStochastic Calculus for Financial Engineers",
-            department:{
+            major:{
                 id:ObjectId('57f01c07bb443dee2f706133'),
                 name:"Financial Engineering"
             }
@@ -40,7 +40,7 @@
             code:"FE 620",
             name:"Pricing and Hedging",
             description:"Pricing and HedgingPricing and HedgingPricing and HedgingPricing and HedgingPricing and HedgingPricing and HedgingPricing and Hedging",
-            department:{
+            major:{
                 id:ObjectId('57f01c07bb443dee2f706133'),
                 name:"Financial Engineering"
             }

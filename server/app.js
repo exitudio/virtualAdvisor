@@ -1,8 +1,9 @@
 global.rootRequire = function(name) {
   return require(__dirname + '/' + name);
 }
+
 var express = require('express');
-//var session = require('express-session');//express-session
+var session = require('express-session');//express-session
 var engine = require('ejs-locals'); //ejs
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -23,6 +24,7 @@ require("./libs/mongoose-init");
 var passport = require('passport');
 var flash    = require('connect-flash');
 require('./config/passport');
+
 
 //express
 var app = express();
@@ -50,10 +52,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 /******************************************
  **************** passport ********************
  ******************************************/
-//app.use(session({ secret: 'welovejamesrowland' })); // session secret
-//app.use(passport.initialize());
-//app.use(passport.session()); // persistent login sessions
-//app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(session({ secret: 'welovejamesrowland',resave: true, saveUninitialized: true })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 /******************************************
@@ -61,14 +63,13 @@ app.use(express.static(path.join(__dirname, 'public')));
  ******************************************/
 app.use('/', routes);
 app.use('/users', users);
-//app.use('/login', require('./routes/login'));
 //api
-app.use('/api/departments', require('./routes/api/departments'));
+app.use('/api', require('./routes/api/api'));
 
 //View the Front End Html Pages
 app.get('/Student', function (req, res) {
   res.sendfile('StudentPage.html');
-});
+})
 
 
 
