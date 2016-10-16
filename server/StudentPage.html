@@ -92,7 +92,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <span class="icon-bar"></span>
 	                </button>
 
-	                <!-- Logo --><a class="navbar-brand" href="#">WELCOME</a><!-- //Logo -->
+	                <!-- Logo --><a class="navbar-brand" href="#">Virtual Advisor</a><!-- //Logo -->
 
 	            </div>
 	            
@@ -103,7 +103,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 		                <li><a href="#about" class="scroll">Majors</a></li>
 		                <li><a href="#foreword" class="scroll">Courses</a></li>
-
 		                <!-- Dropdown -->
 		                <li role="presentation" class="dropdown carat1">
 			                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Graduation<span class="caret"></span> </a>
@@ -113,6 +112,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				                </ul>
 		                </li>
 		                <!-- //Dropdown -->
+		               
+		                <!-- Dropdown 2-->
+		                <li role="presentation" class="dropdown carat1">
+			                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Academics<span class="caret"></span> </a>
+				                <ul class="dropdown-menu dropdown1">
+					    			<li><a href="#admissions" class="scroll">Undergrad</a></li>
+		                			<li><a href="#alumnus" class="scroll">Grad</a></li>
+				                </ul>
+		                </li>
+		                <!-- //Dropdown 2 -->
+		                
 
 					    <li><a href="#news" class="scroll">Progress Tracker</a></li>
 		                <li><a href="#contact" class="scroll">Appointment</a></li>
@@ -217,7 +227,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 			</script>
 				
-				
+				<h2>Hoverable Dropdown</h2>
+				<p>Move the mouse over the button to open the dropdown menu.</p>
+				<div class="dropdown">
+  					<button class="dropbtn">Select Your Major</button>
+  				<div class="dropdown-content">
+   					<a href="#">Software Engineering</a>
+    				<a href="#">Computer Science</a>
+    				<a href="#">Information System</a>
+  				</div>
+				</div>	
 			</div>
     		
     		<!-- //Major-Ends-Here -->
@@ -231,13 +250,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<thead>
                         <tr>
                             <th>Course Name</th>
-                            <th>Course Number</th>
+                            <th>Course ID</th>
+                            <th>Course Description</th>
+                            <th>Course Prerequisite</th>
                         </tr>
                     </thead>
 
 					  <tr ng-repeat="x in major">
 						<td>{{ x.name }}</td>
-						<td>{{ x.description }}</td>
+						<td>{{ x.ID }}</td>
+						<td>{{ x.Description }}</td>
+						<td>{{ x.Prerequisite }}</td>
 					  </tr>
 				</table>
 
@@ -246,7 +269,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<script>
 			var app = angular.module('myApp', []);
 			app.controller('customersCtrl', function($scope, $http) {
-				$http.get("http://localhost:6246/api/departments/courses/Software%20Engineering")
+				$http.get("http://localhost:3001/api/departments/courses/?=SSW")
 				.then(function (response) {$scope.major = response.data;});
 			});
 			</script>
@@ -597,6 +620,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-- News-Starts-Here -->
         	<div class="news slideanim" id="news">
         		<h3>PROGRESS TRACKER</h3>
+					<h1>Dynamic Progress Bar</h1>
+
+						<div id="myProgress">
+ 					    <div id="myBar">
+    					<div id="label">0%</div>
+  						</div>
+						</div>
+
+						<br>
+						<button onclick="move()">Check your progress</button>
+						<script>
+function move() {
+  var elem = document.getElementById("myBar");
+  var width = 0;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++;
+      elem.style.width = width + '%';
+      document.getElementById("label").innerHTML = width * 1  + '%';
+    }
+  }
+}
+</script>
+        		<!--
         		<div class="news-img">
 	        		<div class="col-md-4 col-sm-4 n1">
 	        			<img src="images/n1.jpg" alt="news">
@@ -610,7 +660,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		       		<div class="clearfix"></div>
 	       		</div>
         	</div>
-			<!-- //News-Ends-Here -->
+			 //News-Ends-Here -->
 
 			<!-- Contact-Starts-Here -->
         	<div class="contact slideanim" id="contact">
