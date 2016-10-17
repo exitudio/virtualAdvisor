@@ -3,11 +3,11 @@ var router = express.Router();
 var passport = require('passport');
 var mongoose = require('mongoose');
 /* GET home page. */
-router.get('/test',isAuthenticated, function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/student',isAuthenticated, function(req, res, next) {
+  res.sendfile('StudentPage.html');
 });
-router.get('/login', function(req, res, next) {
-  res.render('login.ejs', { message: req.flash('loginMessage') });
+router.get('/index', function(req, res, next) {
+  res.sendfile('index.html');
   //res.render('login',{ message: "" });
 });
 
@@ -19,8 +19,8 @@ router.get('/login', function(req, res, next) {
 //  failureFlash : true // allow flash messages
 //}));
 router.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/test', // redirect to the secure profile section
-    failureRedirect : '/login', // redirect back to the signup page if there is an error
+    successRedirect : '/student', // redirect to the secure profile section
+    failureRedirect : '/index', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
 

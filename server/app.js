@@ -66,10 +66,9 @@ app.use('/users', users);
 //api
 app.use('/api', require('./routes/api/api'));
 
-//View the Front End Html Pages
-app.get('/Student', function (req, res) {
-  res.sendfile('StudentPage.html');
-})
+//Programs and Courses Api
+app.use('/api/programs', require('./routes/api/programs'));
+
 
 
 
