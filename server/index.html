@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 
 <!DOCTYPE html>
-<html>
+<html ng-app = "myApp">
 <head>
 <title>Exchange Education a Education category Flat Bootstrap Responsive Website Template | :: W3layouts</title>
 
@@ -45,8 +45,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<script src="js/clndr.js" type="text/javascript"></script>
 	<script src="js/site.js" type="text/javascript"></script>
 <!-- //Calender-JavaScript -->
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 </head>
+    
+    <style>
+#majors {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#majors td, #majors th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#majors tr:nth-child(even){background-color: #f2f2f2;}
+
+#majors tr:hover {background-color: #ddd;}
+
+#majors th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9D1535;
+    color: white;
+}
+</style>
 
 <!-- Body-Starts-Here -->
 <body>
@@ -65,7 +92,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <span class="icon-bar"></span>
 	                </button>
 
-	                <!-- Logo --><a class="navbar-brand" href="#">STEVENS INSTITUTE OF TECHNOLOGY</a><!-- //Logo -->
+	                <!-- Logo --><a class="navbar-brand" href="#">Virtual Advisor</a><!-- //Logo -->
 
 	            </div>
 	            
@@ -79,11 +106,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 		                <!-- Dropdown -->
 		                <li role="presentation" class="dropdown carat1">
-			                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Courses<span class="caret"></span> </a>
-				                <ul class="dropdown-menu dropdown1">
-					    			<li><a href="#admissions" class="scroll">Programs</a></li>
+			                <a class="dropdown-toggle" data-toggle="dropdown" href="#Programs" role="button" aria-haspopup="true" aria-expanded="false">Programs<span class="caret"></span> </a>
+				               <!-- <ul class="dropdown-menu dropdown1">
+					    			<li><a href="#admissions" class="scroll">Admissions</a></li>
+		                			<li><a href="#alumnus" class="scroll">Alumnus</a></li>
+					                <li><a href="#programs" class="scroll">Programs</a></li>
+					                <li><a href="#services" class="scroll">Services</a></li>
+					                <li><a href="#faculty" class="scroll">Faculty</a></li>
+					                <li><a href="#edifice" class="scroll">Edifices</a></li>
+					                <li><a href="#project" class="scroll">Projects</a></li>
+					                <li><a href="#events" class="scroll">Events</a></li>
 				                </ul>
-		                </li>
+		                </li>-->
 		                <!-- //Dropdown -->
 
 					    <li><a href="#news" class="scroll">News</a></li>
@@ -95,19 +129,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				                <div id="loginpop">
 					                <a href="#" id="loginButton"><span>Login</span></a>
 					                <div id="loginBox">
-<!--                                        <form action="/login" method="post">
-                                                    <div class="form-group">
-                                                        <label>Email</label>
-                                                        <input type="text" class="form-control" name="email">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Password</label>
-                                                        <input type="password" class="form-control" name="password">
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-warning btn-lg">Login</button>
-                                        </form>-->
-						                <form action="/login" method="post" id="loginForm">
+						                <form id="loginForm" action="/login" method="post">
 							                <fieldset id="body">
 								                <fieldset>
 									                <label for="email">Email Address</label>
@@ -248,34 +270,95 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     		<!-- //Foreword-Ends-Here -->
 
 			<!-- Admissions-Starts-Here -->
-        	<div class="admissions slideanim" id="admissions">
-                <h3>ADMISSIONS-2016 PROSPECTUS</h3>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum velit esse cillum dolore eu fugiat nulla pariatur commodo. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        	<div class="admissions slideanim" id="Programs">
+                <h3>Unique Curriculum, National Recognition</h3>
+                <p>A Stevens education is different. Educated by a unique curriculum blending technical training, teamwork, design projects, internships and cooperative education opportunities, Stevens graduates are consistently in high demand by industry leaders and agencies seeking highly prepared, solutions-oriented employees and team members. Stevens graduates also enjoy starting and mid-career salaries that outpace those of graduates of nearly all other U.S. higher educational institutions. Learn more about career services at Stevens.
 
-                <!-- Add a PDF file and give its link here if required -->
-                <div class="pdf">
-                	<a href="#"><sup>[PDF]</sup>Admissions</a>
-                </div>
+U.S. News & World Report rankings of higher education institutions have recognized Stevens as one of the nation's top universities since 2011. Stevens has been accredited by the Middle States Commission on Higher Education since 1927, the Accreditation Board for Engineering and Technology (ABET) since 1936, and the Association to Advance Collegiate Schools of Business (AACSB) since 2015.
+
+Stevens is home to three National Centers of Excellence, as well as dozens of joint research programs, facilities and centers focused on critical industries such as cybersecurity, defense, energy, finance, healthcare, homeland and maritime security, STEM education and urban and coastal resilience. We also maintain extensive professional networks and relationships with leading universities, government agencies and industry.</p>
+					<form id="contactform">
+
+					<div class="formcolumn">
+					<label for="dept">Departments</label>
+					<select id="dept">
+					<option value="3">Computer Science</option>
+					<option value="2.1">Software Engineering</option>
+					<option value="3">Computer Engineering</option>
+					</select>
+					</div>
+					
+					<div class="formcolumn">
+					<label for="dept">Programs</label>
+					<select id="dept">
+					<option value="3">COMPUTER SCIENCE</option>
+					<option value="2.1">CYBERSECURITY</option>
+					<option value="3">ENTERPRISE & CLOUD COMPUTING</option>
+					</select>
+					</div>
+
+					<div class="formcolumn">
+					<fieldset>
+					<legend>Program</legend>
+					<ul>
+					<li>Major<input type="checkbox" id="Major" /></li>
+					<li>Minor<input type="checkbox" id="Minor" /></li>
+					<li>Certification<input type="checkbox" id="Certification" /></li>
+					</ul>
+					</fieldset>
+
+					</div>
+
+					<div class="formcolumn">
+					<fieldset>
+					<legend>Education Path</legend>
+					<ul>
+					<li>UnderGradaute<input type="checkbox" id="UnderGradaute" /></li>
+					<li>Graduate<input type="checkbox" id="Graduate" /></li>
+					<li>5 years Program<input type="checkbox" id="5 years Program"/></li>
+					</ul>
+					</fieldset>
+
+					</div>
+
+					<div class="buttons">
+					<input class="button" type="submit" value="Submit!" />
+					</div>
+
+					</form>
             </div>
-			<!-- //Admissions-Ends-Here -->
                 
-			<!-- News-Starts-Here -->
-        	<div class="news slideanim" id="news">
-        		<h3>OUR OWN NEWS PUBLICATION</h3>
-        		<div class="news-img">
-	        		<div class="col-md-4 col-sm-4 n1">
-	        			<img src="images/n1.jpg" alt="news">
-	        		</div>
-	        		<div class="col-md-4 col-sm-4 n1">
-	        			<img src="images/n2.jpg" alt="news">
-	        		</div>
-	        		<div class="col-md-4 col-sm-4 n1">
-	        			<img src="images/n3.jpg" alt="news">
-	        		</div>
-		       		<div class="clearfix"></div>
-	       		</div>
-        	</div>
-			<!-- //News-Ends-Here -->
+                <script>
+                    var skillsSelect = document.getElementById("newSkill");
+                    var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+                    var app = angular.module('myApp', []);
+                    app.controller('customersCtrl', function($scope, $http) {
+                        var parameter = JSON.stringify({
+                            "Type":"Certificate",
+                            "Department":"Computer Science",
+                            "Level":"Graduate"
+                        });
+                        $http.post("http://localhost:3000/api/programs/courses",parameter)
+                        .then(function (response) {
+                        $scope.names = response.data;});
+                    });
+                </script>
+                
+                    <div ng-app="myApp" ng-controller="customersCtrl">
+
+                    <table id="majors">
+                        <th>Title</th>
+                        <th>Course List</th>
+                        <th>Level</th>
+                      <tr ng-repeat="x in names">
+                        <td>{{ x.Title }}</td>
+                        <td>{{ x.CoursesList }}</td>
+                        <td>{{ x.Level }}</td>
+                      </tr>
+                    </table>
+
+                </div>
+			<!-- //Admissions-Ends-Here -->
 
 			<!-- Contact-Starts-Here -->
         	<div class="contact slideanim" id="contact">
