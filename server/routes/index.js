@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 /* GET home page. */
 router.get('/student', function(req, res, next) {
   res.sendfile('StudentPage.html');
