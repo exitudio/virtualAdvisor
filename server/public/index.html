@@ -342,7 +342,7 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
                 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope, $http) {
-var parameter = JSON.stringify({"Type":"Certificate","Department":"Computer Science","Level":"Graduate"});
+var parameter = JSON.stringify({"Type":"Certificate","Department":"Computer Science","Level":"Graduate","Title":"Cloud Computing"});
     $http.post("http://localhost:3000/api/programs/courses",parameter)
     .then(function (response) {
 	$scope.names = response.data;});

@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 
 <!DOCTYPE html>
-<html ng-app = "myApp">
+<html>
 <head>
 <title>Exchange Education a Education category Flat Bootstrap Responsive Website Template | :: W3layouts</title>
 
@@ -326,38 +326,28 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 					</div>
 
 					</form>
+            </div>              
+            <div ng-app="myApp" ng-controller="customersCtrl">
+
+            <table id="majors">
+                <th>Title</th>
+                <th>Level</th>
+              <tr ng-repeat="x in names">
+                <td>{{ x.Title }}</td>
+                <td>{{ x.Level }}</td>
+              </tr>
+            </table>
+
             </div>
-                
                 <script>
-                    var skillsSelect = document.getElementById("newSkill");
-                    var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
-                    var app = angular.module('myApp', []);
-                    app.controller('customersCtrl', function($scope, $http) {
-                        var parameter = JSON.stringify({
-                            "Type":"Certificate",
-                            "Department":"Computer Science",
-                            "Level":"Graduate"
-                        });
-                        $http.post("http://localhost:3000/api/programs/courses",parameter)
-                        .then(function (response) {
-                        $scope.names = response.data;});
-                    });
-                </script>
-                
-                    <div ng-app="myApp" ng-controller="customersCtrl">
-
-                    <table id="majors">
-                        <th>Title</th>
-                        <th>Course List</th>
-                        <th>Level</th>
-                      <tr ng-repeat="x in names">
-                        <td>{{ x.Title }}</td>
-                        <td>{{ x.CoursesList }}</td>
-                        <td>{{ x.Level }}</td>
-                      </tr>
-                    </table>
-
-                </div>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+var parameter = JSON.stringify({"Type":"Certificate","Department":"Computer Science","Level":"Graduate","Title":"Cloud Computing"});
+    $http.post("http://localhost:3000/api/programs/courses",parameter)
+    .then(function (response) {
+	$scope.names = response.data;});
+});
+</script>
 			<!-- //Admissions-Ends-Here -->
 
 			<!-- Contact-Starts-Here -->
