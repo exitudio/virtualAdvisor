@@ -283,8 +283,18 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 					var app = angular.module('depApp', []);
 					app.controller('dropdownDepartments', function ($scope, $http) {
 
+					    $scope.LoadRequirements=function(program)
+                        {
+                            $http.post('http://localhost:3000/api/req'
+                                    ,{ 'id' : program._id[0] }).success(function(result)
+                            {
+                                $scope.requirements = result;
+                            });
+                        };
+
 						$scope.loadPrograms=function(department)
 						{
+
 
                             $scope.majors=[]
                             $scope.minors=[]
@@ -297,11 +307,11 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 								    {
 								        type = [result[i].Type]
                                         if(type=="Major")
-                                        $scope.majors.push([result[i].Title]);
+                                        $scope.majors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
                                         else if(type=="Minor")
-                                            $scope.minors.push([result[i].Title]);
+                                            $scope.minors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
                                         else if(type=="Certificate")
-                                            $scope.certificates.push([result[i].Title]);
+                                            $scope.certificates.push({"Title":[result[i].Title],"_id":[result[i]._id]});
 
                                     }
 
@@ -330,16 +340,17 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 					
 
 					<label for="dept">Majors</label>
-					<select id="dept"  ng-model="programs" ng-options="p for p in majors">
+					<select id="dept"  ng-model="major" ng-change="LoadRequirements(major)" ng-options="p.Title for p in majors">
 					</select>
 
                         <label for="dept">Minors</label>
-                        <select id="dept"  ng-model="programs" ng-options="p for p in minors">
+                        <select id="dept"  ng-model="minor" ng-change="LoadRequirements(minor)" ng-options="p.Title for p in minors">
                         </select>
 
                         <label for="dept">Certificates</label>
-                        <select id="dept"  ng-model="programs" ng-options="p for p in certificates">
+                        <select id="dept" ng-model="certificate" ng-change="LoadRequirements(certificate)" ng-options="p.Title for p in certificates">
                         </select>
+                        <textarea json-text  name="Text1" cols="40" rows="5">{{requirements|json}}</textarea>
 					</div>
 
 
