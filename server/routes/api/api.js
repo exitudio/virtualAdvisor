@@ -16,8 +16,6 @@ router.get('/majors', function(req, res, next) {
     mongoose.connection.db.collection('Majors', action);
 }).post(function(req, res) {});
 
-
-
 /* Courses. */
 router.get('/:departmentIdOrName/courses', function(req, res, next) {
     var departmentIdOrName = req.params.departmentIdOrName;
@@ -36,45 +34,5 @@ router.get('/:departmentIdOrName/courses', function(req, res, next) {
     });
 }).post(function(req, res) {});
 
-router.get('/departments',function(req,res,next) {
-    var action = function (err, collection) {
-        collection.distinct('Department',function(err, results) {
-            if(err)
-                console.log(err);
-            else {
-                res.send(results);
-            }
-        });
-    };
-    mongoose.connection.db.collection('Programs', action);
-
-});
-
-router.post('/programs',function(req,res) {
-
-
-    var departments = req.body.department
-    mongoose.connection.db.collection('Programs', function(err, items){
-        items.find({"Department":departments},{"_id":1,"Title":1,"Type":1}).toArray(function(err, results){
-            res.json(results);
-            res.end();
-        });
-    });
-
-}).post(function(req, res) {});
-
-router.post('/req',function(req,res) {
-
-
-    var programId = new mongo.ObjectID(req.body.id);
-    mongoose.connection.db.collection('Programs', function(err, items){
-        items.findOne({"_id":programId},{"_id":0,"Requirements":1,"CoursesList":1},function(err, results){
-            res.json(results);
-            res.end();
-        });
-    });
-
-}).post(function(req, res) {});
 
 module.exports = router;
-
