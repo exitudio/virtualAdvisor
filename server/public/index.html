@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <title>Exchange Education a Education category Flat Bootstrap Responsive Website Template | :: W3layouts</title>
 
 <!-- For-Mobile-Apps -->
@@ -194,56 +195,85 @@
 U.S. News & World Report rankings of higher education institutions have recognized Stevens as one of the nation's top universities since 2011. Stevens has been accredited by the Middle States Commission on Higher Education since 1927, the Accreditation Board for Engineering and Technology (ABET) since 1936, and the Association to Advance Collegiate Schools of Business (AACSB) since 2015.
 
 Stevens is home to three National Centers of Excellence, as well as dozens of joint research programs, facilities and centers focused on critical industries such as cybersecurity, defense, energy, finance, healthcare, homeland and maritime security, STEM education and urban and coastal resilience. We also maintain extensive professional networks and relationships with leading universities, government agencies and industry.</p>
-					<form id="contactform">
+				<script>
+					var app = angular.module('depApp', []);
+					app.controller('dropdownDepartments', function ($scope, $http) {
 
-					<div class="formcolumn">
-					<label for="dept">Departments</label>
-					<select id="dept">
-					<option value="3">Computer Science</option>
-					<option value="2.1">Software Engineering</option>
-					<option value="3">Computer Engineering</option>
-					</select>
+						$scope.LoadRequirements=function(program)
+						{
+							$http.post('http://localhost:3000/api/req'
+									,{ 'id' : program._id[0] }).success(function(result)
+							{
+								$scope.requirements = result;
+							});
+						};
+
+						$scope.loadPrograms=function(department)
+						{
+
+
+							$scope.majors=[]
+							$scope.minors=[]
+							$scope.certificates=[]
+							$http.post('http://localhost:3000/api/programs'
+									,{ 'department' : department }).success(function(result)
+							{
+
+								for(i=0;i<result.length;i++)
+								{
+									type = [result[i].Type]
+									if(type=="Major")
+										$scope.majors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+									else if(type=="Minor")
+										$scope.minors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+									else if(type=="Certificate")
+										$scope.certificates.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+
+								}
+
+
+							});
+						};
+						$scope.departments = [];
+						$http.get('http://localhost:3000/api/departments').success(function (result) {
+							$scope.departments = result
+
+						});
+
+
+
+
+					});
+				</script>
+
+				<form id="contactform">
+
+					<div class="formcolumn"  ng-app="depApp" ng-controller="dropdownDepartments">
+						<label for="dept">Departments</label>
+						<select id="dept" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
+						</select>
+
+
+
+						<label for="dept">Majors</label>
+						<select id="dept"  ng-model="major" ng-change="LoadRequirements(major)" ng-options="p.Title for p in majors">
+						</select>
+
+						<label for="dept">Minors</label>
+						<select id="dept"  ng-model="minor" ng-change="LoadRequirements(minor)" ng-options="p.Title for p in minors">
+						</select>
+
+						<label for="dept">Certificates</label>
+						<select id="dept" ng-model="certificate" ng-change="LoadRequirements(certificate)" ng-options="p.Title for p in certificates">
+						</select>
+						<textarea json-text  name="Text1" cols="40" rows="5">{{requirements|json}}</textarea>
 					</div>
-					
-					<div class="formcolumn">
-					<label for="dept">Programs</label>
-					<select id="dept">
-					<option value="3">COMPUTER SCIENCE</option>
-					<option value="2.1">CYBERSECURITY</option>
-					<option value="3">ENTERPRISE & CLOUD COMPUTING</option>
-					</select>
-					</div>
 
-					<div class="formcolumn">
-					<fieldset>
-					<legend>Program</legend>
-					<ul>
-					<li>Major<input type="checkbox" id="Major" /></li>
-					<li>Minor<input type="checkbox" id="Minor" /></li>
-					<li>Certification<input type="checkbox" id="Certification" /></li>
-					</ul>
-					</fieldset>
 
-					</div>
 
-					<div class="formcolumn">
-					<fieldset>
-					<legend>Education Path</legend>
-					<ul>
-					<li>UnderGradaute<input type="checkbox" id="UnderGradaute" /></li>
-					<li>Graduate<input type="checkbox" id="Graduate" /></li>
-					<li>5 years Program<input type="checkbox" id="5 years Program"/></li>
-					</ul>
-					</fieldset>
 
-					</div>
 
-					<div class="buttons">
-					<input class="button" type="submit" value="Submit!" />
-					</div>
-
-					</form>
-            </div>
+				</form>
 			<!-- //Admissions-Ends-Here -->
 
 			<!-- Events-Starts-Here -->
@@ -290,7 +320,7 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
         	</div>
 			<!-- //Contact-Ends-Here -->
 
-    	</div>
+
 
     	<!-- Map-iFrame -->
     	<div class="map">

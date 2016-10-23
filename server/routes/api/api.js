@@ -6,33 +6,46 @@ var mongoose = require('mongoose');
 
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
-/* Department. */
-router.get('/majors', function(req, res, next) {
+router.get('/departments',function(req,res,next) {
     var action = function (err, collection) {
-        collection.find().toArray(function(err, results) {
-            res.send(results);
+        collection.distinct('Department',function(err, results) {
+            if(err)
+                console.log(err);
+            else {
+                res.send(results);
+            }
         });
     };
-    mongoose.connection.db.collection('Majors', action);
-}).post(function(req, res) {});
+    mongoose.connection.db.collection('Programs', action);
 
-/* Courses. */
-router.get('/:departmentIdOrName/courses', function(req, res, next) {
-    var departmentIdOrName = req.params.departmentIdOrName;
+});
 
-    var findObject;
-    if( checkForHex.test(departmentIdOrName) ){
-        findObject = {"major.id":new mongo.ObjectID(departmentIdOrName)};
-    }else{
-        findObject = {"major.name":departmentIdOrName};
-    }
+router.post('/programs',function(req,res) {
 
-    mongoose.connection.db.collection('Courses', function (err, collection) {
-        collection.find(findObject).toArray(function(err, results) {
-            res.send(results);
+
+    var departments = req.body.department
+    mongoose.connection.db.collection('Programs', function(err, items){
+        items.find({"Department":departments},{"_id":1,"Title":1,"Type":1}).toArray(function(err, results){
+            res.json(results);
+            res.end();
         });
     });
+
 }).post(function(req, res) {});
+
+router.post('/req',function(req,res) {
+
+
+    var programId = new mongo.ObjectID(req.body.id);
+    mongoose.connection.db.collection('Programs', function(err, items){
+        items.findOne({"_id":programId},{"_id":0,"Requirements":1,"CoursesList":1},function(err, results){
+            res.json(results);
+            res.end();
+        });
+    });
+
+}).post(function(req, res) {});
+
 
 router.post('/submit_candidacy', function(req, res, next) {
     console.log(req);
