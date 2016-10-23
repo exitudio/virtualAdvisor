@@ -34,5 +34,10 @@ router.get('/:departmentIdOrName/courses', function(req, res, next) {
     });
 }).post(function(req, res) {});
 
+router.post('/submit_candidacy', function(req, res, next) {
+    console.log(req);
+    res.send('You sent the name "' + req.body + '".');
+});
+
 
 module.exports = router;
