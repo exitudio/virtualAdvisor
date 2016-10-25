@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 router.get('/test',isAuthenticated, function(req, res, next) {
     res.render('index', {title: 'Express'});
 });
-router.get('/student', function(req, res, next) {
+router.get('/student',isAuthenticated, function(req, res, next) {
     var userName = "";
     if( req.user && req.user.Email){
         userName = req.user.Email.substr(0, 10);

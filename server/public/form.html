@@ -19,7 +19,13 @@
 <div id='FDFXFA_Processing'><span class="fa fa-spinner fa-spin"></span></div>
 <div id='FDFXFA_FormType'>FDF</div>
 <div id='FDFXFA_PDFName'>SP_AC_Masters_v2.pdf</div>
-<div id='FDFXFA_Menu'><a title='Submit Form' style='float:left;' class="fa  fa-check-square-o" onclick="document.getElementById('candidacy_form').submit()">Submit</a></div>
+<!--div id='FDFXFA_Menu'><a title='Submit Form' style='float:left;' class="fa  fa-check-square-o" onclick="document.getElementById('candidacy_form').submit()">Submit</a></div-->
+<script>
+function submitForm(){
+	console.log(document.getElementsByTagName('html')[0].innerHTML);
+}
+</script>
+<div id='FDFXFA_Menu'><a id="submit-button" title='Submit Form' style='float:left;' class="fa  fa-check-square-o" onclick="submitForm()">Submit</a></div>
 
 <div id="jpedal" class="pageArea" style="overflow: hidden; position: relative; width: 935px; height: 1210px; margin-top:20px; margin-left:auto; margin-right:auto; ">
 <script type="text/javascript">
@@ -696,7 +702,7 @@ function checkOver(i) {
 <input type="text"  tabindex="2"  id="form132_1" value="" data-objref="637 0 R" title="Student Identification No"  data-field-name="Student Identification No"/>
 <input type="text"  tabindex="5"  id="form133_1" value="" data-objref="640 0 R" title="Concentration"  data-field-name="Concentration"/>
 <input type="text"  tabindex="3"  id="form134_1" value="" data-objref="638 0 R" title="First Name"  data-field-name="First Name"/>
-<input type="text"  tabindex="1"  id="form135_1" value="" data-objref="636 0 R" title="Last Name"  data-field-name="Last Name"/>
+<input type="text" value="EKKASIT"  tabindex="1"  id="form135_1" value="" data-objref="636 0 R" title="Last Name"  data-field-name="Last Name"/>
 <input type="text"  tabindex="31"  id="form136_1" value="" data-objref="666 0 R" title="Course Name_Row_4"  data-field-name="Course NameRow4"/>
 <input type="text"  tabindex="122"  id="form137_1" value="" data-objref="757 0 R" title="Course Name_Row_5"  data-field-name="Course NameRow5_2"/>
 <input type="text"  tabindex="108"  id="form138_1" value="" data-objref="743 0 R" title="Course Name_Row_3"  data-field-name="Course NameRow3_2"/>
