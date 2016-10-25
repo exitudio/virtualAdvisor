@@ -17,6 +17,6 @@ router.post('/courses', function(req, res, next)
             res.send(results);
         })
     })
-}).post(function(req, res) {});
+});
 
 module.exports = router;

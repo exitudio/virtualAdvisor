@@ -19,8 +19,8 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-    //console.log("p:"+this.Password);
-    //console.log("new pass:"+bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) );
+    console.log("p:"+this.Password);
+    console.log("new pass:"+bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) );
     return bcrypt.compareSync(password, this.Password);
 };
 // create the model for users and expose it to our app

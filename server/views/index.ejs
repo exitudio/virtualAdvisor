@@ -123,6 +123,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <!--li><a href="#news" class="scroll">News</a></li-->
                     <li><a href="#contact" class="scroll">Contact</a></li>
 
+
+                    <% if (userName.length == 0) { %>
                     <!-- Login-Button -->
                     <li>
                         <div class="login-pop">
@@ -150,6 +152,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <script src="js/menu_jquery.js"></script>
                     </li>
                     <!-- //Login-Button -->
+
+
 
                     <!-- Signup-Button -->
                     <li>
@@ -183,10 +187,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                         <script src="js/signup_jquery.js"></script>
                     </li>
-                    <!-- //Signup-Button -->
-                    <% if (userName.length > 0) { %>
-                    <li><a type="button" class="btn btn-primary" href="/student"><span><%= userName %><span></a></li>
                     <% } %>
+
+
+                    <!----------------------profile-Button ----------------------------------------------->
+                    <% if (userName.length > 0) { %>
+                    <script>
+                        $(document).ready(function(){
+                            $("#profile-button").click(function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/student";
+                            });
+                        });
+                    </script>
+
+                    <li id="profile-button"><a type="button" class="btn btn-primary" href="/student"><span><%= userName %><span></a></li>
+                    <% } %>
+                    <!------------------------------------------------------------------------------------->
+
+
+
                 </ul>
             </div>
             <!-- //Navbar-Collapse -->

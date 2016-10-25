@@ -7,13 +7,19 @@ router.get('/test',isAuthenticated, function(req, res, next) {
     res.render('index', {title: 'Express'});
 });
 router.get('/student', function(req, res, next) {
-  res.sendfile('StudentPage.html');
+    var userName = "";
+    if( req.user && req.user.Email){
+        userName = req.user.Email.substr(0, 10);
+    }
+    res.render("studentPage.ejs", { userName: userName});
+  //res.sendfile('StudentPage.html');
 });
 router.get('/index', function(req, res, next) {
     var userName = "";
     if( req.user && req.user.Email){
         userName = req.user.Email.substr(0, 10);
     }
+    console.log("userName : "+userName);
     res.render('index', { userName: userName});
 });
 router.get('/', function(req, res, next) {
