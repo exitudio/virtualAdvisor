@@ -4,7 +4,7 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<title>Exchange Education a Education category Flat Bootstrap Responsive Website Template | :: W3layouts</title>
+<title>Virtual Advisor</title>
 
 <!-- For-Mobile-Apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,6 +43,16 @@
 <!-- //Calender-JavaScript -->
 
 </head>
+    
+    <style>
+        #textAreaStyle {
+	width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma, sans-serif;
+}
+</style>
 
 <!-- Body-Starts-Here -->
 <body>
@@ -72,14 +82,7 @@
 
 		                <li><a href="#about" class="scroll">About Us</a></li>
 		                <li><a href="#foreword" class="scroll">Events</a></li>
-
-		                <!-- Dropdown -->
-		                <li role="presentation" class="dropdown carat1">
-			                <a class="dropdown-toggle" data-toggle="dropdown" href="#Programs" role="button" aria-haspopup="true" aria-expanded="false">Programs<span class="caret"></span> </a>
-				         
-		                <!-- //Dropdown -->
-
-					    <li><a href="#news" class="scroll">News</a></li>
+                        <li><a href="#Department" class="scroll">Departments</a></li>
 		                <li><a href="#contact" class="scroll">Contact</a></li>
 
 		                <!-- Login-Button -->
@@ -175,7 +178,7 @@
                     <div class="col-md-6 col-sm-6" id="about-pic">
                     <div class="clearfix"></div>
                 </div>
-    		</div>
+    		  </div>
     		<!-- //About-Ends-Here -->
 
     		<!-- Foreword-Starts-Here -->
@@ -188,7 +191,7 @@
     		<!-- //Foreword-Ends-Here -->
 
 			<!-- Admissions-Starts-Here -->
-        	<div class="admissions slideanim" id="Programs">
+        	<div class="contact slideanim" id="Department">
                 <h3>Unique Curriculum, National Recognition</h3>
                 <p>A Stevens education is different. Educated by a unique curriculum blending technical training, teamwork, design projects, internships and cooperative education opportunities, Stevens graduates are consistently in high demand by industry leaders and agencies seeking highly prepared, solutions-oriented employees and team members. Stevens graduates also enjoy starting and mid-career salaries that outpace those of graduates of nearly all other U.S. higher educational institutions. Learn more about career services at Stevens.
 
@@ -199,12 +202,72 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 					var app = angular.module('depApp', []);
 					app.controller('dropdownDepartments', function ($scope, $http) {
 
-						$scope.LoadRequirements=function(program)
+						$scope.LoadMajors=function(program)
 						{
+                            $scope.course = []
+                            $scope.electives = []
+                            
 							$http.post('http://localhost:3000/api/req'
 									,{ 'id' : program._id[0] }).success(function(result)
 							{
-								$scope.requirements = result;
+								    $scope.requirements = result;
+                               if ($scope.requirements.Requirements.Core.length > 0)
+                                    {
+                                        // Looping through the course list for Majors
+                                        for(var i = 0; i < $scope.requirements.Requirements.Core.length; i++)
+                                        {
+                                            $scope.course = $scope.requirements.Requirements.Core[i];
+                                        }
+                                        
+                                    }
+                                if ($scope.requirements.Requirements.Electives.length > 0)
+                                    {
+                                        // Looping through the course list for Majors
+                                        for(var i = 0; i < $scope.requirements.Requirements.Electives.length; i++)
+                                        {
+                                            $scope.electives = $scope.requirements.Requirements.Electives[i];
+                                        }
+                                        
+                                    }
+                                
+							});
+						};
+                        
+                        $scope.LoadMinors=function(program)
+						{
+                            $scope.course = []
+							$http.post('http://localhost:3000/api/req'
+									,{ 'id' : program._id[0] }).success(function(result)
+							{
+								    $scope.requirements = result;
+                                if($scope.requirements.CoursesList.length > 0)
+                                    {
+                                        //Looping through the course list for certificates
+                                        for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                                        {
+                                            $scope.course = $scope.requirements.CoursesList[i];
+                                        }
+                                    }
+                                
+							});
+						};
+                        
+                    $scope.LoadCertificates=function(program)
+						{
+                            $scope.course = []
+							$http.post('http://localhost:3000/api/req'
+									,{ 'id' : program._id[0] }).success(function(result)
+							{
+								    $scope.requirements = result;
+                                if($scope.requirements.CoursesList.length > 0)
+                                    {
+                                        //Looping through the course list for certificates
+                                        for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                                        {
+                                            $scope.course = $scope.requirements.CoursesList[i];
+                                        }
+                                    }
+                                
 							});
 						};
 
@@ -245,50 +308,43 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 
 					});
 				</script>
+             </div>
+                <div class="contact slideanim"   ng-app="depApp" ng-controller="dropdownDepartments">
 
-				<form id="contactform">
-
-					<div class="formcolumn"  ng-app="depApp" ng-controller="dropdownDepartments">
-						<label for="dept">Departments</label>
-						<select id="dept" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
+                    <form id="contactform">
+					
+						<label for="dept">Departments: </label>
+						<select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
 						</select>
-
-
-
-						<label for="dept">Majors</label>
-						<select id="dept"  ng-model="major" ng-change="LoadRequirements(major)" ng-options="p.Title for p in majors">
+                        <br>
+                        <br>
+						<label for="dept">Majors: </label>
+						<select id="dept" style="width: 20em;" ng-model="major" ng-change="LoadMajors(major)" ng-options="p.Title for p in majors">
 						</select>
-
-						<label for="dept">Minors</label>
-						<select id="dept"  ng-model="minor" ng-change="LoadRequirements(minor)" ng-options="p.Title for p in minors">
+                        <br>
+                        <br>
+                        
+						<label for="dept">Minors: </label>
+						<select id="dept" style="width: 20em;" ng-model="minor" ng-change="LoadMinors(minor)" ng-options="p.Title for p in minors">
 						</select>
+                        <br>
+                        <br>
 
-						<label for="dept">Certificates</label>
-						<select id="dept" ng-model="certificate" ng-change="LoadRequirements(certificate)" ng-options="p.Title for p in certificates">
+                        <label for="dept">Certificates: </label>
+						<select id="dept" style="width: 20em;" ng-model="certificate" ng-change="LoadCertificates(certificate)" ng-options="p.Title for p in certificates">
 						</select>
-						<textarea json-text  name="Text1" cols="40" rows="5">{{requirements|json}}</textarea>
-					</div>
-
-
-
-
-
-				</form>
+                        <br>
+                        <br>
+						<textarea readonly json-text style="font-family:comic sans ms;font-size:15pt" name="Text1" cols="40" rows="5">{{"Requirements to Achieve Major, Minor or Certificate Degree \nRequired Courses: "+course.Required+"\nList of Courses: " + course.Courses + "\nTotal Credits: " + requirements.Requirements.Credits}}</textarea> <br>
+                            
+                </form>
+				
+            </div>
+        
 			<!-- //Admissions-Ends-Here -->
 
 			<!-- Events-Starts-Here -->
-        	<div class="events slideanim" id="events">
-        		<h3>EVENTS</h3>
-        		<div class="event-grid">
-	        		<div class="col-md-4 col-sm-4 cal">
-	        			<div class="cal1 cal_2">
-	        				<div class="clndr">
-	        					<div class="clndr-controls"><div class="clndr-control-button"><p class="clndr-previous-button">previous</p></div><div class="month">December 2015</div><div class="clndr-control-button rightalign"><p class="clndr-next-button">next</p></div></div><table class="clndr-table"><thead><tr class="header-days"><td class="header-day">S</td><td class="header-day">M</td><td class="header-day">T</td><td class="header-day">W</td><td class="header-day">T</td><td class="header-day">F</td><td class="header-day">S</td></tr></thead><tbody><tr><td class="day past adjacent-month last-month calendar-day-2015-08-30"><div class="day-contents">30</div></td><td class="day past adjacent-month last-month calendar-day-2015-08-31"><div class="day-contents">31</div></td><td class="day today calendar-day-2015-09-01"><div class="day-contents">1</div></td><td class="day calendar-day-2015-09-02"><div class="day-contents">2</div></td><td class="day calendar-day-2015-09-03"><div class="day-contents">3</div></td><td class="day calendar-day-2015-09-04"><div class="day-contents">4</div></td><td class="day calendar-day-2015-09-05"><div class="day-contents">5</div></td></tr><tr><td class="day calendar-day-2015-09-06"><div class="day-contents">6</div></td><td class="day calendar-day-2015-09-07"><div class="day-contents">7</div></td><td class="day calendar-day-2015-09-08"><div class="day-contents">8</div></td><td class="day calendar-day-2015-09-09"><div class="day-contents">9</div></td><td class="day event calendar-day-2015-09-10"><div class="day-contents">10</div></td><td class="day event calendar-day-2015-09-11"><div class="day-contents">11</div></td><td class="day event calendar-day-2015-09-12"><div class="day-contents">12</div></td></tr><tr><td class="day event calendar-day-2015-09-13"><div class="day-contents">13</div></td><td class="day event calendar-day-2015-09-14"><div class="day-contents">14</div></td><td class="day calendar-day-2015-09-15"><div class="day-contents">15</div></td><td class="day calendar-day-2015-09-16"><div class="day-contents">16</div></td><td class="day calendar-day-2015-09-17"><div class="day-contents">17</div></td><td class="day calendar-day-2015-09-18"><div class="day-contents">18</div></td><td class="day calendar-day-2015-09-19"><div class="day-contents">19</div></td></tr><tr><td class="day calendar-day-2015-09-20"><div class="day-contents">20</div></td><td class="day event calendar-day-2015-09-21"><div class="day-contents">21</div></td><td class="day event calendar-day-2015-09-22"><div class="day-contents">22</div></td><td class="day event calendar-day-2015-09-23"><div class="day-contents">23</div></td><td class="day calendar-day-2015-09-24"><div class="day-contents">24</div></td><td class="day calendar-day-2015-09-25"><div class="day-contents">25</div></td><td class="day calendar-day-2015-09-26"><div class="day-contents">26</div></td></tr><tr><td class="day calendar-day-2015-09-27"><div class="day-contents">27</div></td><td class="day calendar-day-2015-09-28"><div class="day-contents">28</div></td><td class="day calendar-day-2015-09-29"><div class="day-contents">29</div></td><td class="day calendar-day-2015-09-30"><div class="day-contents">30</div></td><td class="day adjacent-month next-month calendar-day-2015-10-01"><div class="day-contents">1</div></td><td class="day adjacent-month next-month calendar-day-2015-10-02"><div class="day-contents">2</div></td><td class="day adjacent-month next-month calendar-day-2015-10-03"><div class="day-contents">3</div></td></tr></tbody></table>
-	        				</div>
-	        			</div>
-	        		</div>	
-        		</div>
-        	</div>
+
 			<!-- //Events-Ends-Here -->
 
 			<!-- News-Starts-Here -->
@@ -296,8 +352,6 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 			<!-- //News-Ends-Here -->
 
 			<!-- Contact-Starts-Here -->
-			<br>
-					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         	<div class="contact slideanim" id="contact">
         		<h3>CONTACT</h3>
         		<form class="contact_form">
@@ -328,7 +382,7 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
     	</div>
     	<!-- //Map-iFrame -->
 
-    </div>
+
     <!-- Content-Ends-Here -->
 
     <!-- Footer-Starts-Here -->
@@ -355,8 +409,7 @@ Stevens is home to three National Centers of Excellence, as well as dozens of jo
 	    			<ul class="footer_list">
 	    				<li><a href="#about" class="scroll">About us</a></li>
 	    				<li><a href="#foreword" class="scroll">Events</a></li>
-	    				<li><a href="#Programs" class="scroll">Programs</a></li>
-	    				<li><a href="#news" class="scroll">News</a></li>
+	    				<li><a href="#Department" class="scroll">Department</a></li>
 	    				<li><a href="#contact" class="scroll">Contact</a></li>
 						<li><a href="#contact" class="scroll">LogIn</a></li>
 						<li><a href="#project" class="scroll">Signup</a></li>
