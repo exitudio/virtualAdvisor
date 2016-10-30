@@ -15,6 +15,8 @@ router.get('/test'/*,isAuthenticated*/, function(req, res, next) {
 
 // student
 router.get('/student',isAuthenticated, function(req, res, next) {
+    console.log("____");
+    console.log(req.session);
     var userName = "";
     if( req.user && req.user.Email){
         userName = req.user.Email.substr(0, 10);
@@ -61,7 +63,7 @@ router.post('/login', function(req, res, next) {
         if (!user) { return res.redirect('/login'); }
         req.logIn(user, function(err) {
             if (err) { return next(err); }
-            return res.redirect('/candidacy');
+            return res.redirect('/student');
         });
     })(req, res, next);
 });
@@ -69,13 +71,9 @@ router.post('/login', function(req, res, next) {
 
 
 function isAuthenticated(req, res, next) {
-    // do any checks you want to in here
-    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-    // you can do this however you want with whatever variables you set up
     console.log("isAuthenticated:"+req.user);
     if (req.user && req.user.Password)
         return next();
-    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
     res.redirect('/login');
 }
 

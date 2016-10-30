@@ -23,7 +23,7 @@ passport.use('local-login', new LocalStrategy({
         //    email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
         // asynchronous
-        process.nextTick(function() {
+        //process.nextTick(function() {
 
             User.findOne({ 'Email' :  email }, function(err, user) {
                 //console.log(' Callback from db : email='+email);
@@ -45,6 +45,6 @@ passport.use('local-login', new LocalStrategy({
                     return done(null, user);
                 }
             });
-        });
+       // });
 
     }));
