@@ -51,6 +51,18 @@ router.get('/login', function(req, res, next) {
 router.get('/signup', function(req, res, next) {
     res.render('signup.ejs', {  });
 });
+router.get('/signup_temp', function(req, res) {
+
+    // render the page and pass in any flash data if it exists
+    res.render('signup_temp.ejs', { message: req.flash('signupMessage') });
+});
+// process the signup form
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/student', // redirect to the secure profile section
+    failureRedirect : '/signup_temp', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
 // process the login form
 // https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 /*router.post('/login', passport.authenticate('local-login', {
