@@ -131,12 +131,13 @@
 		                <!-- //Login-Button -->
 
 						<!----------------------profile-Button ----------------------------------------------->
+						<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
 						<script>
-							$(document).ready(function(){
-								$("#profile-button").click(function(){
-									window.location.href = window.location.protocol + "//" + window.location.host + "/student";
-								});
+
+							$.get( "http://localhost:3000/api/departments", function( data ) {
+								console.log( data );
 							});
+
 						</script>
 						<% if (userName.length > 0) { %>
 						<li id="profile-button"><a type="button" class="btn btn-primary" href="/student"><span><%= userName %><span></a></li>

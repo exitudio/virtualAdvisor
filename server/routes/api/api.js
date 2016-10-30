@@ -31,7 +31,7 @@ router.post('/programs',function(req,res) {
         });
     });
 
-}).post(function(req, res) {});
+});
 
 router.post('/req',function(req,res) {
 
@@ -44,7 +44,7 @@ router.post('/req',function(req,res) {
         });
     });
 
-}).post(function(req, res) {});
+});
 
 
 router.post('/submit_candidacy', function(req, res, next) {

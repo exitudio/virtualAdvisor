@@ -8,10 +8,10 @@ var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
 router.post('/courses', function(req, res, next)
           {
-    var majorType= req.body.Type
-    var departments = req.body.Department
-    var level = req.body.Level
-    var title = req.body.Title
+    var majorType= req.body.Type;
+    var departments = req.body.Department;
+    var level = req.body.Level;
+    var title = req.body.Title;
     mongoose.connection.db.collection('Programs', function(err, items){
         items.find({"Type":majorType,"Department":departments,"Level":level,"Title":title}).toArray(function(err, results){
             res.send(results);
