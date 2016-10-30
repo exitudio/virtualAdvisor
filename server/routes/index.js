@@ -48,7 +48,9 @@ router.get('/login', function(req, res, next) {
 
   //res.render('login',{ message: "" });
 });
-
+router.get('/signup', function(req, res, next) {
+    res.render('signup.ejs', {  });
+});
 // process the login form
 // https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 /*router.post('/login', passport.authenticate('local-login', {

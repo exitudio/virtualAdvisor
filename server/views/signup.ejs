@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body 		{ padding-top:80px; }
+    </style>
+
+</head>
+<body>
+<script>
+    var app = angular.module('depApp', []);
+    app.controller('dropdownDepartments', function ($scope, $http) {
+
+        $scope.LoadMajors=function(program)
+        {
+            $scope.course = []
+            $scope.electives = []
+
+            $http.post('http://localhost:3000/api/req'
+                    ,{ 'id' : program._id[0] }).success(function(result)
+            {
+                $scope.requirements = result;
+                if ($scope.requirements.Requirements.Core.length > 0)
+                {
+                    // Looping through the course list for Majors
+                    for(var i = 0; i < $scope.requirements.Requirements.Core.length; i++)
+                    {
+                        $scope.course = $scope.requirements.Requirements.Core[i];
+                    }
+
+                }
+                if ($scope.requirements.Requirements.Electives.length > 0)
+                {
+                    // Looping through the course list for Majors
+                    for(var i = 0; i < $scope.requirements.Requirements.Electives.length; i++)
+                    {
+                        $scope.electives = $scope.requirements.Requirements.Electives[i];
+                    }
+
+                }
+
+            });
+        };
+
+        $scope.LoadMinors=function(program)
+        {
+            $scope.course = []
+            $http.post('http://localhost:3000/api/req'
+                    ,{ 'id' : program._id[0] }).success(function(result)
+            {
+                $scope.requirements = result;
+                if($scope.requirements.CoursesList.length > 0)
+                {
+                    //Looping through the course list for certificates
+                    for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                    {
+                        $scope.course = $scope.requirements.CoursesList[i];
+                    }
+                }
+
+            });
+        };
+
+        $scope.LoadCertificates=function(program)
+        {
+            $scope.course = []
+            $http.post('http://localhost:3000/api/req'
+                    ,{ 'id' : program._id[0] }).success(function(result)
+            {
+                $scope.requirements = result;
+                if($scope.requirements.CoursesList.length > 0)
+                {
+                    //Looping through the course list for certificates
+                    for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                    {
+                        $scope.courses.push ($scope.requirements.CoursesList[i]);
+                    }
+                }
+
+            });
+        };
+
+        $scope.loadPrograms=function(department)
+        {
+
+
+            $scope.majors=[]
+            $scope.minors=[]
+            $scope.certificates=[]
+            $http.post('http://localhost:3000/api/programs'
+                    ,{ 'department' : department }).success(function(result)
+            {
+
+                for(i=0;i<result.length;i++)
+                {
+                    type = [result[i].Type]
+                    if(type=="Major")
+                        $scope.majors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+                    else if(type=="Minor")
+                        $scope.minors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+                    else if(type=="Certificate")
+                        $scope.certificates.push({"Title":[result[i].Title],"_id":[result[i]._id]});
+
+
+                }
+
+
+            });
+        };
+        $scope.departments = [];
+        $http.get('http://localhost:3000/api/departments').success(function (result) {
+            $scope.departments = result
+
+        });
+
+
+
+
+    });
+
+</script>
+<div class="contact slideanim"   ng-app="depApp" ng-controller="dropdownDepartments">
+    <form>
+        <label>First Name:<input type="text" id="firstname"></label><br/>
+        <label>Last Name:<input type="text" id="lastname"></label><br>
+        <label>E-Mail:<input type="text" id="email"></label><br/>
+        <label>Phone:<input type="text" id="phone"></label><br/>
+        <label>Select Your Program</label>
+        <label for="dept">Departments: </label>
+        <select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
+        </select>
+        <br>
+        <br>
+        <label for="dept">Majors: </label>
+        <select id="dept" style="width: 20em;" ng-model="major" ng-change="LoadMajors(major)" ng-options="p.Title for p in majors">
+        </select>
+        <br>
+        <br>
+
+        <label for="dept">Minors: </label>
+        <select id="dept" style="width: 20em;" ng-model="minor" ng-change="LoadMinors(minor)" ng-options="p.Title for p in minors">
+        </select>
+        <br>
+        <br>
+
+        <label for="dept">Certificates: </label>
+        <select id="dept" style="width: 20em;" ng-model="certificate" ng-change="LoadCertificates(certificate)" ng-options="p.Title for p in certificates">
+        </select>
+        <label ng-repeat="c for c in courses"> {{courses}}</label>
+    </form>
+    </div>
+</body>
+</html>
