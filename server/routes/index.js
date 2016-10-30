@@ -63,6 +63,12 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash : true // allow flash messages
 }));
 
+// logout
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 // process the login form
 // https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 /*router.post('/login', passport.authenticate('local-login', {
