@@ -16,12 +16,28 @@ router.get('/test'/*,isAuthenticated*/, function(req, res, next) {
 // student
 router.get('/student',isAuthenticated, function(req, res, next) {
     console.log("____");
-    console.log(req.session);
-    var userName = "";
-    if( req.user && req.user.Email){
-        userName = req.user.Email.substr(0, 10);
-    }
-    res.render("studentPage.ejs", { userName: userName});
+
+    mongoose.connection.db.collection('Students', function(err, items){
+        items.findOne({"id":req.user._doc.id},function(err, results){
+            if( results && results.Grades ){
+                for( var i=0;i<=results.Grades.length-1;i++){
+                    console.log(results.Grades[0]["Course Code"]);
+                    console.log(results.Grades[0]["Grade"]);
+                    //For Kyle
+                }
+            }
+
+
+            // reder view
+            var userName = "";
+            if( req.user && req.user.Email){
+                userName = req.user.Email.substr(0, 10);
+            }
+            res.render("studentPage.ejs", { userName: userName});
+        });
+    });
+
+
   //res.sendfile('StudentPage.html');
 });
 
@@ -101,7 +117,10 @@ function isAuthenticated(req, res, next) {
 
 router.get('/candidacy',isAuthenticated, function(req, res, next) {
 
-    namesofUser = req.user._doc.name.split(" ");
+    if(req.user._doc.name != undefined )
+        namesofUser = req.user._doc.name.split(" ");
+    else
+        namesofUser = ["",""];
     studentData = new Object();
     studentData.firstName = namesofUser[0];
     studentData.lastName = namesofUser[1];
@@ -109,7 +128,8 @@ router.get('/candidacy',isAuthenticated, function(req, res, next) {
     studentData.id = req.user._doc.id;
     rootRequire("libs/query-pool").getStudentById(studentData.id,function(err,result){
         if( result ){
-            studentData.grades = result[0].grades;
+            if( result && result[0])
+                studentData.grades = result[0].grades;
             res.render("candidacy.ejs", studentData);
         }
     });

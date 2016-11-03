@@ -589,25 +589,25 @@ function checkOver(i) {
 
 <%
 	function returnCourseNumberIfExist(i){
-		if(studentData.grades[i]){
+		if(studentData.grades && studentData.grades[i]){
 			return studentData.grades[i].code;
 		}
 		return "";
 	}
 	function returnCourseTitleIfExist(i){
-		if(studentData.grades[i]){
+		if(studentData.grades && studentData.grades[i]){
 			return studentData.grades[i].title;
 		}
 		return "";
 	}
 	function returnGradeIfExist(i){
-		if(studentData.grades[i]){
+		if(studentData.grades && studentData.grades[i]){
 			return studentData.grades[i].grade;
 		}
 		return "";
 	}
 	function returnCreditsIfExist(i){
-		if(studentData.grades[i]){
+		if(studentData.grades && studentData.grades[i]){
 			return studentData.grades[i].credits;
 		}
 		return "";
