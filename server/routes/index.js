@@ -20,11 +20,13 @@ router.get('/student',isAuthenticated, function(req, res, next) {
     mongoose.connection.db.collection('Students', function(err, items){
         items.findOne({"id":req.user._doc.id},function(err, results){
             if( results && results.Grades ){
-                for( var i=0;i<=results.Grades.length-1;i++){
+                /*for( var i=0;i<=results.Grades.length-1;i++){
                     console.log(results.Grades[0]["Course Code"]);
                     console.log(results.Grades[0]["Grade"]);
-                    //For Kyle
-                }
+                    
+                }*/
+
+                console.log(GPA(results.Grades.));
             }
 
 
@@ -137,3 +139,54 @@ router.get('/candidacy',isAuthenticated, function(req, res, next) {
 });
 
 module.exports = router;
+function GPA(grades){
+    sum = 0
+    for (i=0; i<grades.length; i++){
+        switch (grades[i]) {
+            case 'A+':
+                grades[i]= 4.0;
+                break;
+            case 'A':
+                grades[i]= 4.0;
+                break;
+            case 'A-':
+                grades[i]= 3.7;
+                break;
+            case 'B+':
+                grades[i]= 3.3;
+                break;
+            case 'B':
+                grades[i]= 3.0;
+                break;
+            case 'B-':
+                grades[i]= 2.7;
+                break;
+            case 'C+':
+                grades[i]= 2.3;
+                break;
+            case 'C':
+                grades[i]= 2.0;
+                break;
+            case 'C-':
+                grades[i]= 1.7;
+                break;
+            case 'D+':
+                grades[i]= 1.3;
+                break;
+            case 'D':
+                grades[i]= 1.0;
+                break;
+            case 'F':
+                grades[i]= 0.0;
+                break;
+            default:
+                console.log("Not a grade")
+                break;
+        }
+        sum+=grades[i]
+        average= sum/grades.length
+    }
+    return average
+}
+
+
