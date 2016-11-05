@@ -15,30 +15,80 @@ router.get('/test'/*,isAuthenticated*/, function(req, res, next) {
 
 // student
 router.get('/student',isAuthenticated, function(req, res, next) {
-    console.log("____");
+    var studentID = "10115";//req.user._doc.id;//
+    rootRequire("libs/query-pool").getStudentProgressById(studentID,function(err,result){
 
-    mongoose.connection.db.collection('Students', function(err, items){
-        items.findOne({"id":req.user._doc.id},function(err, results){
-            if( results && results.Grades ){
-                /*for( var i=0;i<=results.Grades.length-1;i++){
-                    console.log(results.Grades[0]["Course Code"]);
-                    console.log(results.Grades[0]["Grade"]);
-                    
-                }*/
+        if( result && result[0] && result[0].Grades ){
+            var student = result[0];
 
-                console.log(GPA(results.Grades.));
+            //GPA
+            if(student.Grades)
+                console.log(GPA(student.Grades));
+
+            //progress
+            var totalCoreGradedCredits = 0;
+            var totalElectiveGradedCredits = 0;
+            var totalCoreCredits = 0;
+            var totalElectiveCredits = 0;
+            if( student && student.Grades &&student.requiredCoreCourses){
+                //console.log("1");
+                for( var i=0; i<=student.Grades.length-1; i++){
+
+                    //check core
+                    //console.log("2");
+                    var isCore = false;
+                    for( var j=0; j<=student.requiredCoreCourses.length-1; j++){
+                        //console.log("3");
+                        if( student.requiredCoreCourses[j].courseID === student.Grades[i]["gradedCode"] ){
+                            //console.log(student.requiredCoreCourses[j].courseID+" is core");
+                            totalCoreGradedCredits += parseInt(student.requiredCoreCourses[j].credits);
+                            isCore = true;
+                            break;
+                        }
+                    }
+                    //check elective.
+                    if(!isCore){
+                        //check elective
+                        //console.log(student.Grades[i]["gradedCode"]+" is not core");
+                        var splitCode = student.Grades[i]["gradedCode"].split(" ");
+                        for( var j=0; j<=student.requiredElective["Required By code"].length-1; j++){
+                            //console.log(" check :: "+splitCode[0]+" , "+ student.requiredElective["Required By code"][j]);
+                            if( splitCode[0] == student.requiredElective["Required By code"][j] ){
+                                totalElectiveGradedCredits += parseInt(student.Grades[i]["gradedCredits"]);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                //total core credits
+
+                for( var i=0; i<=student.requiredCoreCourses.length-1; i++){
+                    totalCoreCredits += parseInt(student.requiredCoreCourses[i].credits);
+                }
+
+                //total core elective
+                totalElectiveCredits = student.totalCredits-totalCoreCredits;
             }
+        }
 
-
-            // reder view
-            var userName = "";
-            if( req.user && req.user.Email){
-                userName = req.user.Email.substr(0, 10);
-            }
-            res.render("studentPage.ejs", { userName: userName});
+        // reder view
+        var userName = "";
+        if( req.user && req.user._doc && req.user._doc.name){
+            userName = req.user._doc.name;
+        }
+        console.log("totalCoreCredits:"+totalCoreCredits);
+        console.log("totalElectiveCredits:"+totalElectiveCredits);
+        res.render("student.ejs", {
+            userName: userName,
+            totalCoreGradedCredits: totalCoreGradedCredits,
+            totalElectiveGradedCredits: totalElectiveGradedCredits,
+            coreCreditsLeft: (totalCoreCredits-totalCoreGradedCredits),
+            electiveCreditsLeft: (totalElectiveCredits-totalElectiveGradedCredits),
+            totalCoreCredits:totalCoreCredits,
+            totalElectiveCredits:totalElectiveCredits
         });
     });
-
 
   //res.sendfile('StudentPage.html');
 });
@@ -142,48 +192,48 @@ module.exports = router;
 function GPA(grades){
     sum = 0
     for (i=0; i<grades.length; i++){
-        switch (grades[i]) {
+        switch (grades[i].Grade) {
             case 'A+':
-                grades[i]= 4.0;
+                grades[i]["Grade"]= 4.0;
                 break;
             case 'A':
-                grades[i]= 4.0;
+                grades[i]["Grade"]= 4.0;
                 break;
             case 'A-':
-                grades[i]= 3.7;
+                grades[i]["Grade"]= 3.7;
                 break;
             case 'B+':
-                grades[i]= 3.3;
+                grades[i]["Grade"]= 3.3;
                 break;
             case 'B':
-                grades[i]= 3.0;
+                grades[i]["Grade"]= 3.0;
                 break;
             case 'B-':
-                grades[i]= 2.7;
+                grades[i]["Grade"]= 2.7;
                 break;
             case 'C+':
-                grades[i]= 2.3;
+                grades[i]["Grade"]= 2.3;
                 break;
             case 'C':
-                grades[i]= 2.0;
+                grades[i]["Grade"]= 2.0;
                 break;
             case 'C-':
-                grades[i]= 1.7;
+                grades[i]["Grade"]= 1.7;
                 break;
             case 'D+':
-                grades[i]= 1.3;
+                grades[i]["Grade"]= 1.3;
                 break;
             case 'D':
-                grades[i]= 1.0;
+                grades[i]["Grade"]= 1.0;
                 break;
             case 'F':
-                grades[i]= 0.0;
+                grades[i]["Grade"]= 0.0;
                 break;
             default:
                 console.log("Not a grade")
                 break;
         }
-        sum+=grades[i]
+        sum+=grades[i]["Grade"]
         average= sum/grades.length
     }
     return average
