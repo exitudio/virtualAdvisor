@@ -125,6 +125,8 @@ Query.getStudentProgressById = function(_id, callBack){
                         Core: {
                             Courses: "$program.Requirements.Core.Courses",
                             "credits":"$courseDetail.Credits",
+                            Title:"$courseDetail.Title",
+                            Description:"$courseDetail.Description",
                             Required: '$program.Requirements.Core.Required'
                         },
                         Electives: "$program.Requirements.Electives",
@@ -154,6 +156,8 @@ Query.getStudentProgressById = function(_id, callBack){
                 "courses":{
                     $push: {
                         courseID: "$program.Requirements.Core.Courses",
+                        Title:"$program.Requirements.Core.Title",
+                        Description:"$program.Requirements.Core.Description",
                         "credits":"$program.Requirements.Core.credits"
                     }
                 }
@@ -199,13 +203,13 @@ Query.getStudentProgressById = function(_id, callBack){
                     "requiredCoreDescription":"$requiredCoreDescription",
                     "requiredElective":"$requiredElective",
                     "totalCredits":"$totalCredits",
-
-
                 },
                 "Grades":{
                     $push: {
-                        gradedCode: "$courseDetail.Code",
-                        gradedCredits:"$courseDetail.Credits",
+                        courseID: "$courseDetail.Code",
+                        Title:"$courseDetail.Title",
+                        Description:"$courseDetail.Description",
+                        credits:"$courseDetail.Credits",
                         Grade:"$Grades.Grade"
                     }
                 }

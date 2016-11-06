@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <title>Student Profile</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
@@ -60,11 +60,11 @@
     <!-- /. NAV SIDE  -->
     <div id="page-wrapper" >
         <div id="page-inner">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Welcome '<%= userName%>'.</h2>
-
-                </div>
+            <div class="page-header">
+                <h1>Welcome <%= userName%>'.</h1>
+                <button class="btn btn-primary" type="button">
+                    GPA <span class="badge"><%= gpa%></span>
+                </button>
             </div>
             <!-- /. ROW  -->
 
@@ -80,20 +80,69 @@
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Core Course : complete <%= totalCoreGradedCredits%> credits from <%= totalCoreCredits%> credits
+                            <h3>Core Course </h3> complete <%= totalCoreGradedCredits%> credits from <%= totalCoreCredits%> credits
                         </div>
                         <div class="panel-body">
                             <div id="core-chart"></div>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <a class="list-group-item list-group-item-success">
+                                    <h3>Completed Core Course</h3> completed <%= totalCoreGradedCredits%> credits
+                                </a>
+
+                                <% completeCoreCourses.forEach(function(course){ %>
+                                <a class="list-group-item">
+                                    <span class="badge"><%= course.credits%> credits</span>
+                                    <span class="badge"><%= course.Grade%></span>
+                                    <h4 class="list-group-item-heading"><%= course.Title%></h4>
+                                    <p class="list-group-item-text"><%= course.courseID %></p>
+                                    <%= course.Description %>
+                                </a>
+                                <% }); %>
+                            </ul>
+
+                            <ul class="list-group">
+                                <a class="list-group-item list-group-item-warning">
+                                    <h3>Not Completed Core Course</h3> complete <%= totalCoreGradedCredits%> credits from <%= totalCoreCredits%> credits
+                                </a>
+                                <% notCompleteCoreCourses.forEach(function(course){ %>
+                                <a class="list-group-item">
+                                    <span class="badge"><%= course.credits%> credits</span>
+                                    <h4 class="list-group-item-heading"><%= course.Title%></h4>
+                                    <p class="list-group-item-text"><%= course.courseID %></p>
+                                    <%= course.Description %>
+                                </a>
+                                <% }); %>
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Elective Course : complete <%= totalElectiveGradedCredits%> credits from <%= totalElectiveCredits%> credits
+                            <h3>Elective Course</h3>  complete <%= totalElectiveGradedCredits%> credits from <%= totalElectiveCredits%> credits
                         </div>
                         <div class="panel-body">
                             <div id="elective-chart"></div>
+
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <a class="list-group-item list-group-item-success">
+                                    <h3>Completed Elective Course</h3> completed <%= totalElectiveGradedCredits%> credits
+                                </a>
+
+                                <% completeElectiveCourses.forEach(function(course){ %>
+                                <a class="list-group-item">
+                                    <span class="badge"><%= course.credits%> credits</span>
+                                    <span class="badge"><%= course.Grade%></span>
+                                    <h4 class="list-group-item-heading"><%= course.Title%></h4>
+                                    <p class="list-group-item-text"><%= course.courseID %></p>
+                                    <%= course.Description %>
+                                </a>
+                                <% }); %>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -134,10 +183,10 @@
             element: 'core-chart',
             data: [ {
                 label: "Core Credits Left",
-                value: <%= totalCoreGradedCredits%>
+                value: <%= coreCreditsLeft%>
             },{
                 label: "Completed Core \nCredits",
-                value: <%= coreCreditsLeft%>
+                value: <%= totalCoreGradedCredits%>
             } ],
             resize: true
         });
@@ -145,10 +194,10 @@
             element: 'elective-chart',
             data: [ {
                 label: "Elective Credits Left",
-                value: <%= totalElectiveGradedCredits%>
+                value: <%= electiveCreditsLeft%>
             },{
                 label: "Completed Elective\nCredits",
-                value: <%= electiveCreditsLeft%>
+                value: <%= totalElectiveGradedCredits%>
             }],
             resize: true
         });
