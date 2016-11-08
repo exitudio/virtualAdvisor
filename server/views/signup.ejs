@@ -1,64 +1,121 @@
-<!doctype html>
+
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <style>
-        body 		{ padding-top:80px; }
-    </style>
+    <title>Virtual Advisor</title>
+
+    <!-- For-Mobile-Apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Exchange Education a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //For-Mobile-Apps -->
+
+    <!-- Custom Theme files -->
+    <!-- Bootstrap Styling --> <link rel='stylesheet' href="css/bootstrap.css" type='text/css' />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap-Working-File --> <script src="js/bootstrap.min.js"></script>
+    <!-- Index-Page-Styling --> <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Owl-Carousel-Styling --> <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" media="all">
+    <!-- //Custom Theme files -->
+
+    <!-- Smooth-Scrolling -->
+    <script type="text/javascript" src="js/move-top.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+            });
+        });
+    </script>
+    <!-- //Smooth-Scrolling -->
+
+    <!-- Calender-JavaScript -->
+    <link rel="stylesheet" href="css/clndr.css" type="text/css" />
+    <script src="js/underscore-min.js" type="text/javascript"></script>
+    <script src= "js/moment-2.2.1.js" type="text/javascript"></script>
+    <script src="js/clndr.js" type="text/javascript"></script>
+    <script src="js/site.js" type="text/javascript"></script>
+    <!-- //Calender-JavaScript -->
 
 </head>
+
+
+<!-- Body-Starts-Here -->
 <body>
+
+<!-- Header-Starts-Here -->
+<div class="header">
+
+    <!-- Navbar-Starts-Here -->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Logo --><a class="navbar-brand" href="#">Virtual Advisor</a><!-- //Logo -->
+
+            </div>
+
+
+
+        </div>
+    </nav>
+    <!-- //Navbar-Ends-Here -->
+
+    <!-- Carousel-Starts-Here -->
+
+    <!-- //Carousel-Ends-Here -->
+
+</div>
 <script>
     var app = angular.module('depApp', []);
     app.controller('dropdownDepartments', function ($scope, $http) {
 
         $scope.LoadMajors=function(program)
         {
-            $scope.course = []
-            $scope.electives = []
+            $scope.courses = []
 
             $http.post('http://localhost:3000/api/req'
                     ,{ 'id' : program._id[0] }).success(function(result)
             {
-                $scope.requirements = result;
-                if ($scope.requirements.Requirements.Core.length > 0)
+
+                courses=result.Requirements.Core[0].Courses;
+                if (courses.length > 0)
                 {
                     // Looping through the course list for Majors
-                    for(var i = 0; i < $scope.requirements.Requirements.Core.length; i++)
+                    for(var i = 0; i < courses.length; i++)
                     {
-                        $scope.course = $scope.requirements.Requirements.Core[i];
+                        $scope.courses.push(courses[i]);
                     }
 
                 }
-                if ($scope.requirements.Requirements.Electives.length > 0)
-                {
-                    // Looping through the course list for Majors
-                    for(var i = 0; i < $scope.requirements.Requirements.Electives.length; i++)
-                    {
-                        $scope.electives = $scope.requirements.Requirements.Electives[i];
-                    }
 
-                }
 
             });
         };
 
         $scope.LoadMinors=function(program)
         {
-            $scope.course = []
+            $scope.courses = []
             $http.post('http://localhost:3000/api/req'
                     ,{ 'id' : program._id[0] }).success(function(result)
             {
-                $scope.requirements = result;
-                if($scope.requirements.CoursesList.length > 0)
+
+                courses = result.CoursesList[0].Courses;
+                if(courses.length > 0)
                 {
                     //Looping through the course list for certificates
-                    for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                    for(var i = 0; i < result.length; i++)
                     {
-                        $scope.course = $scope.requirements.CoursesList[i];
+                        $scope.courses.push(result.CoursesList[i]);
                     }
                 }
 
@@ -67,17 +124,17 @@
 
         $scope.LoadCertificates=function(program)
         {
-            $scope.course = []
+            $scope.courses = []
             $http.post('http://localhost:3000/api/req'
                     ,{ 'id' : program._id[0] }).success(function(result)
             {
-                $scope.requirements = result;
-                if($scope.requirements.CoursesList.length > 0)
+                courses = result.CoursesList[0].Courses;
+                if(courses.length > 0)
                 {
                     //Looping through the course list for certificates
-                    for(var i = 0; i < $scope.requirements.CoursesList.length; i++)
+                    for(var i = 0; i < courses.length; i++)
                     {
-                        $scope.courses.push ($scope.requirements.CoursesList[i]);
+                        $scope.courses.push (courses[i]);
                     }
                 }
 
@@ -123,12 +180,46 @@
     });
 
 </script>
-<div class="contact slideanim"   ng-app="depApp" ng-controller="dropdownDepartments">
-    <form>
-        <label>First Name:<input type="text" id="firstname"></label><br/>
-        <label>Last Name:<input type="text" id="lastname"></label><br>
-        <label>E-Mail:<input type="text" id="email"></label><br/>
-        <label>Phone:<input type="text" id="phone"></label><br/>
+<center>
+<form class="form-horizontal" action='' method="POST"  ng-app="depApp" ng-controller="dropdownDepartments">
+    <fieldset>
+        <div id="legend">
+            <legend class="">Register</legend>
+        </div>
+        <div class="control-group">
+            <!-- Username -->
+            <label class="control-label"  for="First Name">First Name</label>
+                <input type="text" id="firstname" name="firstname" placeholder="" class="input-xlarge">
+            <label class="control-label"  for="Last Name">Last Name</label>
+                 <input type="text" id="lastname" name="lastname" placeholder="" class="input-xlarge">
+            <br>
+            <!-- E-mail -->
+            <label class="control-label" for="email">Stevens E-mail</label>
+                <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+            <p class="help-block">Please provide your E-mail</p>
+
+
+        </div>
+
+
+
+        <div class="control-group">
+            <!-- Password-->
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                <p class="help-block">Password should be at least 4 characters</p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <!-- Password -->
+            <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+            <div class="controls">
+                <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                <p class="help-block">Please confirm password</p>
+            </div>
+        </div>
         <label>Select Your Program</label>
         <label for="dept">Departments: </label>
         <select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
@@ -144,14 +235,25 @@
         <label for="dept">Minors: </label>
         <select id="dept" style="width: 20em;" ng-model="minor" ng-change="LoadMinors(minor)" ng-options="p.Title for p in minors">
         </select>
-        <br>
-        <br>
+        <div class="controls">
+            <h4>Core Classes</h4>
+            <div ng-repeat="course in courses">
 
-        <label for="dept">Certificates: </label>
-        <select id="dept" style="width: 20em;" ng-model="certificate" ng-change="LoadCertificates(certificate)" ng-options="p.Title for p in certificates">
-        </select>
-        <label ng-repeat="c for c in courses"> {{courses}}</label>
-    </form>
-    </div>
+                <input type="checkbox"  >{{course}}<br>
+            </div>
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <button class="btn btn-success">Register</button>
+            </div>
+        </div>
+
+        </div>
+    </fieldset>
+</form>
+</center>
+
+
+
 </body>
 </html>
