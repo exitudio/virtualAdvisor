@@ -200,7 +200,12 @@ function isAuthenticated(req, res, next) {
 }
 
 
+//courseAdvisor
+router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
+    res.render("courseAdvisor.ejs");
+});
 
+//candidacy
 router.get('/candidacy',isAuthenticated, function(req, res, next) {
 
     if(req.user._doc.name != undefined )
