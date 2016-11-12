@@ -205,6 +205,12 @@ router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
     res.render("courseAdvisor.ejs");
 });
 
+//appointment
+//https://mattlewis92.github.io/angular-bootstrap-calendar/#?example=kitchen-sink
+router.get('/appointment'/*,isAuthenticated*/, function(req, res, next) {
+    res.render("appointment.ejs");
+});
+
 //candidacy
 router.get('/candidacy',isAuthenticated, function(req, res, next) {
 
