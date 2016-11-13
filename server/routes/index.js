@@ -208,7 +208,22 @@ router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
 //appointment
 //https://mattlewis92.github.io/angular-bootstrap-calendar/#?example=kitchen-sink
 router.get('/appointment'/*,isAuthenticated*/, function(req, res, next) {
-    res.render("appointment.ejs");
+    rootRequire("libs/query-pool").getAllProfessors(function(err,result){
+        var data = new Object();
+        data.professors = result;
+        data.errorMessage = req.query.error;
+        data.successMessage = req.query.success;
+        res.render("appointment.ejs",data);
+    });
+});
+router.post('/appointment'/*,isAuthenticated*/, function(req, res, next) {
+    //console.dir(req);
+    rootRequire("libs/sendEmail").send(req,function(message){
+        res.redirect('/appointment?success=true');
+    },function(message){
+        res.redirect('/appointment?error='+message);
+    });
+    //res.send('POST request to the homepage');
 });
 
 //candidacy

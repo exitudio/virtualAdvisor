@@ -70,7 +70,9 @@ Query.getStudentById = function(_id, callBack){
     });
 };
 
-
+/*
+ callBack(err,message) must have 2 variables.
+ */
 Query.getStudentProgressById = function(_id, callBack){
     mongoose.connection.db.collection('Students').aggregate([
         {
@@ -281,6 +283,18 @@ Query.getStudentProgressById = function(_id, callBack){
     ],function(err,result) {
         if(callBack) callBack(err,result);
         console.log("+++"+require('util').inspect(result, false, null))
+    });
+};
+
+/*
+ callBack(err,message) must have 2 variables.
+ */
+Query.getAllProfessors = function(callBack) {
+    mongoose.connection.db.collection('professors', function (err, items) {
+        items.find({}).toArray(function(err,result) {
+            if(callBack) callBack(err,result);
+            console.log("+++"+require('util').inspect(result, false, null))
+        });
     });
 };
 
