@@ -59,6 +59,25 @@ router.post('/req',function(req,res) {
     });
 
 });
+router.post('/register',function(req,res) {
+
+    mongoose.connection.db.collection('Students', function (err, items) {
+        items.insertOne(
+            {
+                'name': req.body.name,
+                'Email': req.body.Email,
+                'password': req.body.password,
+                'program': req.body.program,
+                'Grades': req.body.grades
+            }, function (err, results) {
+                console.log(results)
+
+            }
+        );
+
+
+    });
+});
 router.post('/checkAccount',function(req,res) {
 
 

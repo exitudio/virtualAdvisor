@@ -79,8 +79,15 @@
     var app = angular.module('depApp', []);
     app.controller('dropdownDepartments', function ($scope, $http) {
 
+        $scope.student_email=null
+        $scope.student_password=null
+        $scope.student_password_confirmed=false
+        $scope.student_program=null
+        $scope.student_cores=[]
+        $scope.courses = []
         $scope.LoadMajors=function(program)
         {
+            $scope.student_program = program._id[0];
             $scope.certificate="";
             $scope.minor="";
             $scope.courses = []
@@ -108,7 +115,7 @@
         {
             $scope.certificate="";
             $scope.major="";
-
+            $scope.student_program = program._id[0];
             $scope.courses = []
             $http.post('http://localhost:3000/api/req'
                     ,{ 'id' : program._id[0] }).success(function(result)
@@ -131,7 +138,7 @@
         {
             $scope.major="";
             $scope.minor="";
-
+            $scope.student_program = program._id[0];
             $scope.courses = []
             $http.post('http://localhost:3000/api/req'
                     ,{ 'id' : program._id[0] }).success(function(result)
@@ -217,6 +224,7 @@
         $scope.CheckExistingAccounts = function(email)
         {
             $scope.emailexist='';
+            $scope.student_email =null
             var res = /[A-Z][A-Z][A-Z][A-Z]?[A-Z]?[A-Z]?[A-Z]?[A-Z]?@(stevens\.edu)/i.exec(email);
            if(res!=null)
            {
@@ -226,31 +234,38 @@
                 if(result.Account=='exist')
                 {
                     $scope.emailexist="Account already Exist";
+                    $scope.student_email =null
                 }
 
                 else
                 {
                     $scope.emailexist="Email is good";
+                    $scope.student_email = email
                 }
             });
         }
         else
            {
                $scope.emailexist = "Email not valid";
+               $scope.student_email=null
            }
         }
         $scope.Checkpassword = function()
         {
             $scope.passcheck='';
+            $scope.student_password =null
             if($scope.password!=null)
             {
                 if($scope.password.length>=4)
                 {
                     $scope.passcheck ="Password is good";
+                    $scope.student_password=$scope.password;
+
                 }
                 else
                 {
                     $scope.passcheck ="Please enter a valid password";
+                    $scope.student_password=null
                 }
             }
         }
@@ -258,20 +273,57 @@
         {
             if($scope.password==$scope.passconfirm)
             {
+                $scope.confirmcheck.color='#69F0AE';
                 $scope.confirmcheck="confirmation is matched";
+                $scope.password_confirmed = true;
             }
             else
             {
                 $scope.confirmcheck="confirmation mismatch";
+                $scope.password_confirmed = false;
             }
         }
+        $scope.coreSelected = function(course)
+        {
+            $scope.cores.push(course)
+        }
+        $scope.submit=function()
+        {
+            var grades = []
+            for (var i = 0; i < $scope.student_cores.length; i++) {
+                grades.push(
+                        {
+                            "Course Code": $scope.student_cores[i],
+                            "Grade": "A"
+                        }
+                )
+            }
+//            if (
+//                    $scope.student_email != null &&
+//                    $scope.student_password != null &&
+//                    $scope.student_password_confirmed != false &&
+//                    $scope.student_program != null) {
+                $http.post('http://localhost:3000/api/register',
+                        {
+                            'name': $scope.firstname + $scope.lastname,
+                            'Email': $scope.student_email,
+                            'password': $scope.student_password,
+                            'program': $scope.student_program,
+                            'Grades': grades
 
+                        }).success(function (result)
+                            {
+
+                            });
+
+            }
+        //}
 
     });
 
 </script>
 <center>
-<form class="form-group" action='' method="POST"  ng-app="depApp" ng-controller="dropdownDepartments" ng-sumit="submit()"b>
+<form class="form-group" action=''  ng-app="depApp" ng-controller="dropdownDepartments" ng-submit="submit()"b>
     <fieldset>
         <div id="legend">
             <legend class="">Register</legend>
@@ -279,15 +331,15 @@
         <div class="form-group">
             <!-- Username -->
             <label class="control-label"  for="First Name">First Name</label>
-                <input type="text" id="firstname" ng-model="firstname" placeholder="" class="input-xlarge">
+                <input type="text" id="firstname" ng-model="firstname" placeholder="" class="input-xlarge" required>
             <br>
             <label class="control-label"  for="Last Name">Last Name</label>
-                 <input type="text" id="lastname" name="lastname" placeholder="" class="input-xlarge">
+                 <input type="text" id="lastname" ng-model="lastname" placeholder="" class="input-xlarge" required>
             <br>
             <!-- E-mail -->
             <label class="control-label" for="email">Stevens E-mail</label>
-                <input type="text" ng-change="CheckExistingAccounts(email)" id="email" ng-model="email" placeholder="" class="input-xlarge">
-            <label class="control-label" for="email" ng-model="emailexist">{{emailexist}}</label>
+                <input type="text" ng-change="CheckExistingAccounts(email)" id="email" ng-model="email" placeholder="" class="input-xlarge" required>
+            <span class="control-label" for="email" ng-model="emailexist">{{emailexist}}</span>
 
 
         </div>
@@ -298,8 +350,8 @@
             <!-- Password-->
             <label class="control-label" for="password">Password</label>
             <div class="form-group">
-                <input type="password" id="password" ng-model="password" class="input-xlarge" ng-change="Checkpassword()">
-                <label class="control-label" ng-model="passcheck">{{passcheck}}</label>
+                <input type="password" id="password" ng-model="password" class="input-xlarge" ng-change="Checkpassword()" required>
+                <span class="control-label" ng-model="passcheck">{{passcheck}}</span>
                 <p class="help-block">Password should be at least 4 characters</p>
             </div>
         </div>
@@ -308,8 +360,8 @@
             <!-- Password -->
             <label class="control-label"  for="password_confirm">Password (Confirm)</label>
             <div class="form-group">
-                <input type="password"  id="password_confirm"  ng-model="passconfirm" class="input-xlarge" ng-change="CheckConfirm()">
-                <label class="control-label" ng-model="confirmcheck">{{confirmcheck}}</label>
+                <input type="password"  id="password_confirm"  ng-model="passconfirm" class="input-xlarge" ng-change="CheckConfirm()" required>
+                <span class="control-label" ng-model="confirmcheck" color={{confirmcheck.color}}>{{confirmcheck}}</span>
 
 
             </div>
@@ -337,7 +389,7 @@
             <label>Core Classes</label>
             <div ng-repeat="course in courses">
 
-                <input type="checkbox"  >{{course}}<br>
+                <input type="checkbox" ng-checked="coreSelected(course)">{{course}}<br>
             </div>
 
         </div>
@@ -345,14 +397,14 @@
         <label>Electives</label>
         <div ng-repeat="elective in electives">
             <input type="text" ng-model="elective.code" name="" ng-change="GetClassName(elective.id,elective.code)"  placeholder="Ex: SW 555">
-            <label ng-model="elective.name">{{elective.name}}</label>
+            <span ng-model="elective.name">{{elective.name}}</span>
         </div>
             <button type="button" ng-click="addNewElective()">Add More</button>
         </div>
         <div class="form-group">
             <!-- Button -->
             <div class="form-group">
-                <button class="btn btn-success">Register</button>
+                <input type="submit">
             </div>
         </div>
     </fieldset>
