@@ -19,19 +19,8 @@ router.post('/courses', function(req, res, next)
     })
 });
 
-router.post('/courseAdvisor', function (req, res, next)
-            {
-    var level = req.body.Level;
-    var title = req.body.Title;
-    mongoose.connection.db.collection('Programs', function(err, items){
-        items.find({"Level":level,"Title":title}).toArray(function(err, results){
-            res.send(results);
-        })
-    })
-    
-});
 
-router.post('/courseTest', function (req, res, next)
+router.post('/courseadvisor', function (req, res, next)
             {
     var name = req.body.name;
     mongoose.connection.db.collection('People', function(err, items){
