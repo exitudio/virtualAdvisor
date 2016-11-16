@@ -1116,6 +1116,9 @@ figure {
 img {
   vertical-align: middle;
 }
+.logo { 
+   vertical-align: top;  
+   }
 .img-responsive,
 .thumbnail > img,
 .thumbnail a > img,
