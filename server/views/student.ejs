@@ -17,46 +17,8 @@
 </head>
 <body>
 <div id="wrapper">
-    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Virtual Advisor</a>
-        </div>
-    </nav>
-    <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-                <li class="text-center">
-                    <img  class="user-image img-responsive"/>
-                </li>
-
-                <li>
-                    <a class="active-menu"  href=""><i class="fa fa-dashboard fa-3x"></i> Progress Tracker </a>
-                </li>
-
-
-                <li  >
-                    <a   href="courseAdvisor"><i class="fa fa-user fa-3x"></i> Course Advisor </a>
-                </li>
-                <li  >
-                    <a  href="appointment"><i class="fa fa-table fa-3x"></i> Schedule Appointment </a>
-                </li>
-                <li  >
-                    <a  href="form.html"><i class="fa fa-edit fa-3x"></i> Study Plan </a>
-                </li>
-
-
-            </ul>
-
-        </div>
-
-    </nav>
+    <% var data= 'data to be used by first chart(parameter)'; %>
+    <% include menu.ejs%>
     <!-- /. NAV SIDE  -->
     <div id="page-wrapper" >
         <div id="page-inner">

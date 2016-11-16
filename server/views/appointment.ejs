@@ -1,6 +1,8 @@
 <!doctype html>
 <html ng-app="mwl.calendar.docs">
 <head>
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
@@ -15,11 +17,10 @@
     <script src="js/calendar/dateFormat.js"></script>
     <script src="js/select2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/css/colorpicker.min.css" rel="stylesheet">
-    <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
-    <link href="css/select2.css" rel="stylesheet">
 
+    <link href="css/select2.css" rel="stylesheet">
+    <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
 </head>
 <body>
@@ -195,46 +196,7 @@
 
 <!-- Page -->
 <div id="wrapper">
-    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Virtual Advisor</a>
-        </div>
-    </nav>
-    <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-                <li class="text-center">
-                    <img  class="user-image img-responsive"/>
-                </li>
-
-                <li>
-                    <a class="active-menu"  href="student"><i class="fa fa-dashboard fa-3x"></i> Progress Tracker </a>
-                </li>
-
-
-                <li  >
-                    <a   href="courseAdvisor"><i class="fa fa-user fa-3x"></i> Course Advisor </a>
-                </li>
-                <li  >
-                    <a  href="appointment"><i class="fa fa-table fa-3x"></i> Schedule Appointment </a>
-                </li>
-                <li  >
-                    <a  href="form.html"><i class="fa fa-edit fa-3x"></i> Study Plan </a>
-                </li>
-
-
-            </ul>
-
-        </div>
-
-    </nav>
+    <% include menu.ejs%>
     <div id="page-wrapper" >
         <div id="page-inner">
             <% if (successMessage && successMessage.length > 0) { %>
