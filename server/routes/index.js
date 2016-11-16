@@ -202,7 +202,11 @@ function isAuthenticated(req, res, next) {
 
 //courseAdvisor
 router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
-    res.render("courseAdvisor.ejs");
+    var userName = "";
+    if( req.user && req.user._doc && req.user._doc.name){
+        userName = req.user._doc.name;
+    }
+    res.render("courseAdvisor.ejs",{userName:userName});
 });
 
 //appointment
