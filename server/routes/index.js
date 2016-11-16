@@ -248,6 +248,18 @@ router.get('/candidacy',isAuthenticated, function(req, res, next) {
     //res.sendfile('StudentPage.html');
 });
 
+//Userprofile
+router.post('/userprofile', function (req, res, next)
+            {
+    var email = req.body.Email;
+    mongoose.connection.db.collection('People', function(err, items){
+        items.find({"Email":email}).toArray(function(err, results){
+            res.send(results);
+        })
+    })
+    
+});
+
 module.exports = router;
 function GPA(grades){
     sum = 0
