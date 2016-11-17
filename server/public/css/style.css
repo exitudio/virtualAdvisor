@@ -58,8 +58,8 @@ h1,h4,h5,h6 {
 }
 h2,h3 {
     margin: 0;
-    text-align: left;
-    font-family: 'Montserrat-Regular';
+    text-align: center;
+    font-family: sans-serif;
     font-size: 35px;
     padding: 50px 0;
 }
