@@ -100,7 +100,7 @@ router.get('/student',isAuthenticated, function(req, res, next) {
             }
         }
 
-        // reder view
+        // render view
         var userName = "";
         if( req.user && req.user._doc && req.user._doc.name){
             userName = req.user._doc.name;
@@ -211,16 +211,20 @@ router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
 
 //appointment
 //https://mattlewis92.github.io/angular-bootstrap-calendar/#?example=kitchen-sink
-router.get('/appointment'/*,isAuthenticated*/, function(req, res, next) {
+router.get('/appointment',isAuthenticated, function(req, res, next) {
     rootRequire("libs/query-pool").getAllProfessors(function(err,result){
         var data = new Object();
         data.professors = result;
         data.errorMessage = req.query.error;
         data.successMessage = req.query.success;
+        data.userName = "";
+        if( req.user && req.user._doc && req.user._doc.name){
+            data.userName = req.user._doc.name;
+        }
         res.render("appointment.ejs",data);
     });
 });
-router.post('/appointment'/*,isAuthenticated*/, function(req, res, next) {
+router.post('/appointment',isAuthenticated, function(req, res, next) {
     //console.dir(req);
     rootRequire("libs/sendEmail").send(req,function(message){
         res.redirect('/appointment?success=true');

@@ -23,7 +23,7 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
 </head>
-<body>
+<body style="height: 100%;">
 
 <!-- Modal fullscreen -->
 <script>
@@ -195,9 +195,10 @@
 
 
 <!-- Page -->
-<div id="wrapper">
+<div id="wrapper" style="height: 100vh;">
+    <% var menu = 3; %>
     <% include menu.ejs%>
-    <div id="page-wrapper" >
+    <div id="page-wrapper" style="min-height:0; height: calc(100% - 60px);">
         <div id="page-inner">
             <% if (successMessage && successMessage.length > 0) { %>
             <div class="alert alert-success alert-dismissible" role="alert">

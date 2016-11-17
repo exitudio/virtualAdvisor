@@ -8,7 +8,11 @@
         </button>
         <a class="navbar-brand" href="/">Virtual Advisor</a>
     </div>
+    <div class="nav navbar-nav navbar-right" style="margin-right: 0;">
+        <a class="navbar-brand" style="background: rgb(11, 98, 164); font-size:15px; width:120px;padding-top: 17px;; padding-right:20px;" href="student"><%= userName%></a>
+    </div>
 </nav>
+
 <!-- /. NAV TOP  -->
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
@@ -18,18 +22,21 @@
             </li>
 
             <li>
-                <a class="active-menu"  href=""><i class="fa fa-dashboard fa-3x"></i> Progress Tracker  </a>
+                <a <% if(menu==1){%> class="active-menu" <%}%>  href="student"><i class="fa fa-dashboard fa-3x"></i> Progress Tracker  </a>
             </li>
 
 
             <li  >
-                <a   href="courseAdvisor"><i class="fa fa-user fa-3x"></i> Course Advisor </a>
+                <a <% if(menu==2){%> class="active-menu" <%}%>  href="courseAdvisor"><i class="fa fa-user fa-3x"></i> Course Advisor </a>
             </li>
             <li  >
-                <a  href="appointment"><i class="fa fa-table fa-3x"></i> Schedule Appointment </a>
+                <a <% if(menu==3){%> class="active-menu" <%}%> href="appointment"><i class="fa fa-table fa-3x"></i> Schedule Appointment </a>
             </li>
             <li  >
-                <a  href="form.html"><i class="fa fa-edit fa-3x"></i> Study Plan </a>
+                <a <% if(menu==4){%> class="active-menu" <%}%> href="candidacy"><i class="fa fa-edit fa-3x"></i> Application for Candidacy </a>
+            </li>
+            <li>
+                <a href="logout" style="background:#333"><i class="glyphicon glyphicon-log-out" style="font-size: 1em; "></i> Logout </a>
             </li>
 
 

@@ -6,12 +6,12 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "app-module-path": "^2.0.0",
+    "app-module-path": "^2.1.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "ejs-locals": "^1.0.2",
+    "ejs": "*",
     "express": "~4.13.4",
     "express-mongo-db": "^2.0.3",
     "jade": "~1.11.0",
