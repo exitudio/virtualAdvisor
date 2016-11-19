@@ -612,7 +612,7 @@ border-radius: 0;
 #contactform select{
 width: 80%;
 font-size: 1.5em;
-border: 10px solid #eee;
+border: 1px solid #817a68;
 }
 
 #contactform .formcolumn{ /* column div inside form */
