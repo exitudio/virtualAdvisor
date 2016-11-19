@@ -56,7 +56,7 @@
 
 <!-- Body-Starts-Here -->
 <body>
-<img src="images/prism.jpg" style='position:fixed;top:0px;left:0px;width:100%;height:100%;z-index:-1;opacity:0.2;'>
+<img src="images/stevens.jpeg" style='position:fixed;top:0px;left:0px;width:100%;height:100%;z-index:-1;opacity:0.8;'>
 <!-- Header-Starts-Here -->
 <div class="header">
 
@@ -141,9 +141,10 @@
  <!-- About-Starts-Here -->
         <div class="about slideanim" id="about">
             <img class="logo" src="images/virtualAdvisorLoo.gif" alt="Logo" width="350" height="350" align="left" />
+            <div style="padding:12px;background-color:#fff;line-height:1.4;">
             <h2>What is Virtual Advisor?</h2>
             <p> A system that assists Stevens’ students in knowing what classes are required, what classes he/she has taken, and when those classes are offered for his/her chosen major and/or minor. Unlike a human advisor, this system will show every possible path with its requirements, alumni reviews, and jobs opportunities. In addition, it lets the students choose in what direction to move forward.</p>
-
+            </div>
             <div class="about-info slideanim">
                 <div class="col-md-6 col-sm-6" id="about-pic">
                     <div class="clearfix"></div>
@@ -153,8 +154,10 @@
 
             <!-- Foreword-Starts-Here -->
             <div class="foreword slideanim" id="foreword">
+                <div style="padding:12px;background-color:#fff;line-height:1.4;">
                 <h3> Events</h3>
                 <p>Today networking has become an essential aspect of your job search. Even if you are well established in your job and have no plans of moving or advancing your career soon, networking has proven to be a valuable tool. Today, studies have shown that up to 80% of jobs are never advertised – they are filled by word of mouth. So it’s who you know and who knows you that matters. You must develop relationships and connections within your network to have more opportunities to advance your career.   Attending meetings and social events hosted by your professional association is a great way to connect with people in your field.</p>
+                </div>
                 <div class="floating-box"><iframe width="225" height="570" src="http://meetu.ps/30XFs9" frameborder="0"></iframe></div>
                 <div class="floating-box"><iframe width="225" height="570" src="http://meetu.ps/30XTfS" frameborder="0"></iframe></div>
             </div>
@@ -162,12 +165,14 @@
 
             <!-- Admissions-Starts-Here -->
             <div class="contact slideanim" id="Department">
+            <div style="padding:12px;background-color:#fff;line-height:1.4;">
                 <h3>Unique Curriculum, National Recognition</h3>
                 <p>A Stevens education is different. Educated by a unique curriculum blending technical training, teamwork, design projects, internships and cooperative education opportunities, Stevens graduates are consistently in high demand by industry leaders and agencies seeking highly prepared, solutions-oriented employees and team members. Stevens graduates also enjoy starting and mid-career salaries that outpace those of graduates of nearly all other U.S. higher educational institutions. Learn more about career services at Stevens.
 
                     U.S. News & World Report rankings of higher education institutions have recognized Stevens as one of the nation's top universities since 2011. Stevens has been accredited by the Middle States Commission on Higher Education since 1927, the Accreditation Board for Engineering and Technology (ABET) since 1936, and the Association to Advance Collegiate Schools of Business (AACSB) since 2015.
 
                     Stevens is home to three National Centers of Excellence, as well as dozens of joint research programs, facilities and centers focused on critical industries such as cybersecurity, defense, energy, finance, healthcare, homeland and maritime security, STEM education and urban and coastal resilience. We also maintain extensive professional networks and relationships with leading universities, government agencies and industry.</p>
+                </div>    
                 <script>
                     var app = angular.module('depApp', []);
                     app.controller('dropdownDepartments', function ($scope, $http) {
@@ -282,6 +287,7 @@
             <div class="contact slideanim"   ng-app="depApp" ng-controller="dropdownDepartments">
 
                 <form id="contactform">
+                    <div style="padding:12px;background-color:#fff;line-height:1.4;">
                     <label for="dept">Departments: </label>
                     <select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
                     </select>
@@ -305,7 +311,7 @@
                     <br>
                     <br>
                     <textarea readonly json-text style="font-family:sans-serif;font-size:15pt" name="Text1" cols="40" rows="5">{{"Requirements to Achieve Major, Minor or Certificate Degree \nRequired Courses: "+course.Required+"\nList of Courses: " + course.Courses + "\nTotal Credits: " + requirements.Requirements.Credits}}</textarea> <br>
-
+                    </div>
                 </form>
 
             </div>
@@ -322,6 +328,7 @@
 
             <!-- Contact-Starts-Here -->
             <div class="contact slideanim" id="contact">
+                <div style="padding:12px;background-color:#fff;line-height:1.4;">
                 <h3>CONTACT</h3>
                 <form class="contact_form">
 
@@ -340,6 +347,7 @@
 
                     <input type="submit" class="more_btn" value="Send Message">
                 </form>
+                </div>
             </div>
             <!-- //Contact-Ends-Here -->
 
