@@ -612,7 +612,7 @@ border-radius: 0;
 #contactform select{
 width: 80%;
 font-size: 1.5em;
-border: 1px solid #817a68;
+border: 1px solid #9e9c9b;
 }
 
 #contactform .formcolumn{ /* column div inside form */
@@ -1039,7 +1039,7 @@ div#contact {
     outline: none;
     color: #5d5d5d;
     height: 50px;
-    border: 1px solid #d5d5d5;
+    border: 1px solid #9e9c9b;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -1053,7 +1053,7 @@ div#contact {
     font-size: 13px;
     padding: 14px 17px 14px;
     outline: none;
-    border: 1px solid #d5d5d5;
+    border: 1px solid #9e9c9b;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
