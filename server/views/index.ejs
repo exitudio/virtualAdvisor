@@ -285,9 +285,9 @@
                 </script>
             </div>
             <div class="contact slideanim"   ng-app="depApp" ng-controller="dropdownDepartments">
-
+                <div style="padding:12px;background-color:#fff;line-height:1.4;">
+                <h3>PROGRAMS</h3>
                 <form id="contactform">
-                    <div style="padding:12px;background-color:#fff;line-height:1.4;">
                     <label for="dept">Departments: </label>
                     <select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
                     </select>
