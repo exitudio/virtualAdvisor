@@ -25,7 +25,7 @@
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                     <h2>Welcome 'Student Name' <%= userName%>.</h2>
+                     <h2>Welcome <%= userName%>.</h2>
 
                     </div>
                 </div>              
@@ -41,8 +41,11 @@
 						     $http.post('http://localhost:3000/api/programs/courseAdvisor'
                                     ,{ 	'name':'Baldwin C' }).success(function(result)
                                     {
-										$scope.concentration = result;
-										console.log(result)
+                                        for(i = 0; i < result.length; i++)
+                                            {
+                                                $scope.concentration[i] = result[i];
+                                            }
+										console.log($scope.concentration)
                                     });
 					});
 			</script>
@@ -52,7 +55,7 @@
                             Default Panel
                         </div>
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                            <p>{{concentration[0]}}</p>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -65,7 +68,7 @@
                             Primary Panel
                         </div>
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                            <p>{{concentration[1]}}</p>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -78,7 +81,7 @@
                             Success Panel
                         </div>
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                            <p>{{concentration[2]}}</p>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
