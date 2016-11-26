@@ -3,6 +3,7 @@
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <title>Virtual Advisor</title>
 	<!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
@@ -32,7 +33,19 @@
 				                  <!-- /. ROW  -->
                  <hr />
                                  
-            <div class="row">
+            <div class="row" ng-app="courseAdvisorApp" ng-controller="courseAdvisorController">
+			<script>
+                    var app = angular.module('courseAdvisorApp', []);
+                    app.controller('courseAdvisorController', function ($scope, $http){
+							$scope.concentration = [];
+						     $http.post('http://localhost:3000/api/programs/courseAdvisor'
+                                    ,{ 	'name':'Baldwin C' }).success(function(result)
+                                    {
+										$scope.concentration = result;
+										console.log(result)
+                                    });
+					});
+			</script>
                 <div class="col-md-4 col-sm-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
