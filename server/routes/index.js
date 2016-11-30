@@ -226,7 +226,14 @@ router.get('/appointment',isAuthenticated, function(req, res, next) {
 });
 router.post('/appointment',isAuthenticated, function(req, res, next) {
     //console.dir(req);
-    rootRequire("libs/sendEmail").send(req,function(message){
+    var mailOptions = {
+        from: '"Virtual Advisor" <virtualAdvisorMail@gmail.com>', // sender address
+        to: req.body.professorEmail, // list of receivers
+        subject: req.body.topic, // Subject line
+        text: req.body.description+"  [Student time requrest : "+req.body.day+" at "+req.body.student_time+"]", // plaintext body
+        //html: '<b>Hello world ?</b>' // html body
+    };
+    rootRequire("libs/sendEmail").send(mailOptions,function(message){
         res.redirect('/appointment?success=true');
     },function(message){
         res.redirect('/appointment?error='+message);

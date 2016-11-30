@@ -27,16 +27,16 @@ SendEmail.send = function(data,onComplete,onError) {
     //var transporter = nodemailer.createTransport('smtps://exitudio@gmail.com:PASSWORD_CHANGE_ME@smtp.gmail.com');
 
 // setup e-mail data with unicode symbols
-    var mailOptions = {
+    /*var mailOptions = {
         from: '"Virtual Advisor" <virtualAdvisorMail@gmail.com>', // sender address
         to: data.body.professorEmail, // list of receivers
         subject: data.body.topic, // Subject line
         text: data.body.description+"  [Student time requrest : "+data.body.day+" at "+data.body.student_time+"]", // plaintext body
         //html: '<b>Hello world ?</b>' // html body
-    };
+    };*/
 
 // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(data, function(error, info){
         if(error){
             onError(error);
             return console.log(error);
