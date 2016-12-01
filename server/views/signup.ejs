@@ -4,12 +4,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <title>Virtual Advisor</title>
 
-    <!-- For-Mobile-Apps -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Exchange Education a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //For-Mobile-Apps -->
 
     <!-- Custom Theme files -->
     <!-- Bootstrap Styling --> <link rel='stylesheet' href="css/bootstrap.css" type='text/css' />
@@ -48,7 +42,7 @@
 
 <!-- Header-Starts-Here -->
 <div class="header">
-<body style="background:url(images/virtualAdvisorLoo.gif);background-attachment:fixed; background-repeat: no-repeat; ">
+<body >
 
     <!-- Navbar-Starts-Here -->
     <nav class="navbar navbar-inverse">
@@ -79,149 +73,125 @@
 <script>
     var app = angular.module('depApp', []);
     app.controller('dropdownDepartments', function ($scope, $http) {
-
+        //First Loading all the departments
+        $scope.departments = [];
+        $http.get('http://localhost:3000/api/departments').success(function (result) {
+            $scope.departments = result
+        });
+        $scope.advisors = [];
+        $http.get('http://localhost:3000/api/advisors').success(function (result) {
+            $scope.advisors = result
+        });
+         //Student Info
         $scope.student_email=null
         $scope.student_password=null
         $scope.student_password_confirmed=false
         $scope.student_program=null
+        $scope.student_advisor=null
         $scope.student_cores=[]
-        $scope.courses = []
+        $scope.student_electives=[]
+        $scope.cores = []
+            //Once the major selected -- load all the courses
         $scope.LoadMajors=function(program)
         {
-            $scope.student_program = program._id[0];
-            $scope.certificate="";
-            $scope.minor="";
-            $scope.courses = []
-
-            $http.post('http://localhost:3000/api/req'
-                    ,{ 'id' : program._id[0] }).success(function(result)
+            if(program!=null)
             {
+                $scope.student_program = program._id[0];
+                $scope.certificate = "";
+                $scope.minor = "";
+                $scope.cores = []
 
-                courses=result.Requirements.Core[0].Courses;
-                if (courses.length > 0)
-                {
-                    // Looping through the course list for Majors
-                    for(var i = 0; i < courses.length; i++)
-                    {
-                        $scope.courses.push(courses[i]);
+                $http.post('http://localhost:3000/api/req'
+                        , {'id': program._id[0]}).success(function (result) {
+
+                    cores = result.Requirements.Core[0].Courses;
+                    if (cores.length > 0) {
+                        // Looping through the course list for Majors
+                        for (var i = 0; i < cores.length; i++) {
+                            $scope.cores.push({"code":cores[i],"selected":false,"grade":null});
+                        }
+
                     }
 
-                }
 
-
-            });
+                });
+            }
         };
-
+            //Once the Minor is selected -- load all the core courses
         $scope.LoadMinors=function(program)
         {
-            $scope.certificate="";
-            $scope.major="";
-            $scope.student_program = program._id[0];
-            $scope.courses = []
-            $http.post('http://localhost:3000/api/req'
-                    ,{ 'id' : program._id[0] }).success(function(result)
+            if(program!=null)
             {
+                $scope.certificate = "";
+                $scope.major = "";
+                $scope.student_program = program._id[0];
+                $scope.cores = []
+                $http.post('http://localhost:3000/api/req'
+                        , {'id': program._id[0]}).success(function (result) {
 
-                courses = result.CoursesList[0].Courses;
-                if(courses.length > 0)
-                {
-                    //Looping through the course list for certificates
-                    for(var i = 0; i < result.length; i++)
-                    {
-                        $scope.courses.push(result.CoursesList[i]);
+                    cores = result.CoursesList[0].Courses;
+                    if (cores.length > 0) {
+                        //Looping through the course list for minors
+                        for (var i = 0; i < result.length; i++) {
+                            $scope.cores.push({"code":result.CoursesList[i],"selected":false,"grade":null});
+                        }
                     }
-                }
 
-            });
+                });
+            }
         };
-
+            //Once the Certificate is selected -- load all the core courses
         $scope.LoadCertificates=function(program)
         {
-            $scope.major="";
-            $scope.minor="";
-            $scope.student_program = program._id[0];
-            $scope.courses = []
-            $http.post('http://localhost:3000/api/req'
-                    ,{ 'id' : program._id[0] }).success(function(result)
+            if(program!=null)
             {
-                for(var i=0;i<result.CoursesList.length;i++) {
-                    for (var j = 0; j < result.CoursesList[i].Courses.length; j++) {
-                        $scope.courses.push(result.CoursesList[i].Courses[j]);
+                $scope.major = "";
+                $scope.minor = "";
+                $scope.student_program = program._id[0];
+                $scope.cores = []
+                $http.post('http://localhost:3000/api/req'
+                        , {'id': program._id[0]}).success(function (result) {
+                    for (var i = 0; i < result.CoursesList.length; i++) {
+                        for (var j = 0; j < result.CoursesList[i].Courses.length; j++) {
+                            $scope.cores.push({"code":result.CoursesList[i].Courses[j],"selected":false,"grade":null});
+                        }
                     }
-                }
 
-            });
+                });
+            }
         };
-
+        ////Once the department is selected -- load all the programs
         $scope.loadPrograms=function(department)
         {
-
-
-            $scope.majors=[]
-            $scope.minors=[]
-            $scope.certificates=[]
-            $http.post('http://localhost:3000/api/programs'
-                    ,{ 'department' : department }).success(function(result)
+            if(department!=null)
             {
+                $scope.majors = []
+                $scope.minors = []
+                $scope.certificates = []
+                $http.post('http://localhost:3000/api/programs'
+                        , {'department': department}).success(function (result) {
 
-                for(i=0;i<result.length;i++)
-                {
-                    type = [result[i].Type]
-                    if(type=="Major")
-                        $scope.majors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
-                    else if(type=="Minor")
-                        $scope.minors.push({"Title":[result[i].Title],"_id":[result[i]._id]});
-                    else if(type=="Certificate")
-                        $scope.certificates.push({"Title":[result[i].Title],"_id":[result[i]._id]});
-
-
-                }
-
-
-            });
-        };
-        $scope.departments = [];
-        $http.get('http://localhost:3000/api/departments').success(function (result) {
-            $scope.departments = result
-
-        });
-
-        $scope.electives = [{id: 'elective1','name':'','code':''}, {id: 'elective2','name':'','code':''}, {id: 'elective3','name':'','code':''}];
-        $scope.addNewElective=function()
-        {
-            var newItemNo = $scope.electives.length+1;
-            $scope.electives.push({'id':'elective'+newItemNo});
-        };
-        $scope.GetClassName = function(id,code)
-        {
-            var electives = $scope.electives;
-            for (var i = 0; i < electives.length; i++)
-            {
-                if (electives[i].id == id) {
-                    electives[i].name = '';
-                }
-            }
-            code = code.toUpperCase();
-            var res = /[A-Z][A-Z]?[A-Z]?[A-Z]?\s*[0-9][0-9][0-9]/.exec(code);
-            if(res.length > 0)
-            {
-
-                for (var i = 0; i < electives.length; i++) {
-                    if (electives[i].id == id)
-                    {
-                        $scope.index = i;
-                        $http.post('http://localhost:3000/api/course',{'course_code': code}).success(function (result)
-                        {
-                            electives[$scope.index ].name=result[0].Title;
-
-                        });
-
+                    for (i = 0; i < result.length; i++) {
+                        type = [result[i].Type]
+                        if (type == "Major")
+                            $scope.majors.push({"Title": [result[i].Title], "_id": [result[i]._id]});
+                        else if (type == "Minor")
+                            $scope.minors.push({"Title": [result[i].Title], "_id": [result[i]._id]});
+                        else if (type == "Certificate")
+                            $scope.certificates.push({"Title": [result[i].Title], "_id": [result[i]._id]});
 
 
                     }
-                }
+
+
+                });
             }
-        }
+        };
+
+
+
+
+
         $scope.CheckExistingAccounts = function(email)
         {
             $scope.emailexist='';
@@ -284,35 +254,105 @@
                 $scope.password_confirmed = false;
             }
         }
-        $scope.coreSelected = function(course)
+        //Update the core list when the user check/uncheck the core courses list
+        $scope.coreUpdate = function()
         {
-            $scope.cores.push(course)
+            $scope.student_cores=[];
+            for(c=0;c<$scope.cores.length;c++)
+            {
+                if($scope.cores[c].selected)
+                {
+                    $scope.student_cores.push({"core":$scope.cores[c].code,"grade":$scope.cores[c].grade})
+                }
+
+            }
         }
+
+
+        $scope.electives = [
+            {id: 'elective1','name':'','code':'',"found":false,"grade":null},
+            {id: 'elective2','name':'','code':'',"found":false,"grade":null},
+            {id: 'elective3','name':'','code':'',"found":false,"grade":null}
+                        ];
+        $scope.addNewElective=function()
+        {
+            var newItemNo = $scope.electives.length+1;
+            $scope.electives.push({'id':'elective'+newItemNo,'name':'','code':'',"found":false,"grade":null});
+        };
+        $scope.GetClassName = function(id,code)
+        {
+
+                var electives = $scope.electives;
+                for (var i = 0; i < electives.length; i++)
+                {
+                    if (electives[i].id == id)
+                    {
+                        electives[i].name = '';
+                        if(/\S/.test(code))
+                        {
+                        code = code.toUpperCase();
+                        var res = /[A-Z][A-Z]?[A-Z]?[A-Z]?\s*[0-9][0-9]?[0-9]?[0-9]?/.exec(code);
+                        if (res != null && res.length > 0)
+                        {
+                            $scope.index = i;
+                            $http.post('http://localhost:3000/api/course', {'course_code': code}).success(function (result) {
+                                if (result.length > 0)
+                                {
+                                    electives[$scope.index].name = result[0].Title;
+                                    electives[$scope.index].found = true;
+                                }
+                                else
+                                {
+                                    electives[$scope.index].name = "Class don't exist";
+                                    electives[$scope.index].found = false;
+                                }
+                            });
+                        }
+                        else {
+                            electives[i].name = "Wrong Code";
+                            electives[i].found = false;
+                        }
+
+                        }
+                    }
+
+                }
+
+            }
+
+
+
+
         $scope.submit=function()
         {
-            var grades = []
-            for (var i = 0; i < $scope.student_cores.length; i++) {
-                grades.push(
-                        {
-                            "Course Code": $scope.student_cores[i],
-                            "Grade": "A"
-                        }
-                )
+            for(i=0;i<$scope.electives.length;i++)
+            {
+                if($scope.electives[i].found)
+                $scope.student_electives.push({"elective":$scope.electives[i].code,"grade":$scope.electives[i].grade})
             }
-//            if (
-//                    $scope.student_email != null &&
-//                    $scope.student_password != null &&
-//                    $scope.student_password_confirmed != false &&
-//                    $scope.student_program != null) {
+            $scope.student_advisor = $scope.advisor;
+            Grades = []
+            for(i=0;i<$scope.student_cores.length;i++)
+            {
+                Grades.push({i:{"Course Code":$scope.student_cores[i].code,"Grade":$scope.student_cores[i].grade}})
+            }
+            i=i+1;
+            for(j=0;j<$scope.student_electives.length;j++,i++)
+            {
+                Grades.push({i:{"Course Code":$scope.student_electives[j].code,"Grade":$scope.student_electives[j].grade}})
+            }
+
                 $http.post('http://localhost:3000/api/register',
                         {
-                            'name': $scope.firstname + $scope.lastname,
+                            'name': $scope.firstname+" "+ $scope.lastname,
+                            'major': $scope.student_program,
+                            'Grades': Grades,
                             'Email': $scope.student_email,
                             'password': $scope.student_password,
-                            'program': $scope.student_program,
-                            'Grades': grades
+                            'Advisor': $scope.student_advisor,
 
-                        }).success(function (result)
+
+                        }).success(function ()
                             {
 
                             });
@@ -363,11 +403,14 @@
             <div class="form-group">
                 <input type="password"  id="password_confirm"  ng-model="passconfirm" class="input-xlarge" ng-change="CheckConfirm()" required>
                 <span class="control-label" ng-model="confirmcheck" color={{confirmcheck.color}}>{{confirmcheck}}</span>
-
-
             </div>
         </div>
-        <label>Select Your Program</label>
+        <label>Select Your Advisor</label>
+        <label>Advisors:</label>
+        <select  ng-model="advisor"   ng-options="a for a in advisors" required>
+        </select>
+        <br>
+        <br>
         <label for="dept">Departments: </label>
         <select id="dept" style="width: 20em;" ng-model="department" ng-change="loadPrograms(department)"  ng-options="d for d in departments">
         </select>
@@ -388,17 +431,43 @@
 
         <div class="form-group">
             <label>Core Classes</label>
-            <div ng-repeat="course in courses">
+            <div ng-repeat="core in cores">
 
-                <input type="checkbox" ng-checked="coreSelected(course)">{{course}}<br>
+                <input type="checkbox" ng-model="core.selected" ng-change="coreUpdate()">{{core.code}}</input>
+                <select ng-model="core.grade" ng-show="core.selected">
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                    <option value="D+">D+</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
+                </select>
             </div>
 
         </div>
         <div class="form-group">
         <label>Electives</label>
         <div ng-repeat="elective in electives">
-            <input type="text" ng-model="elective.code" name="" ng-change="GetClassName(elective.id,elective.code)"  placeholder="Ex: SW 555">
             <span ng-model="elective.name">{{elective.name}}</span>
+            <input type="text" ng-model="elective.code" name="" ng-change="GetClassName(elective.id,elective.code)"  placeholder="Ex: SW 555">
+            <select ng-model="elective.grade" ng-show="elective.found">
+                <option value="A">A</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B">B</option>
+                <option value="B-">B-</option>
+                <option value="C+">C+</option>
+                <option value="C">C</option>
+                <option value="C-">C-</option>
+                <option value="D+">D+</option>
+                <option value="D">D</option>
+                <option value="F">F</option>
+            </select>
         </div>
             <button type="button" ng-click="addNewElective()">Add More</button>
         </div>

@@ -3,6 +3,8 @@ var router = express.Router();
 //var MongoPool = rootRequire("libs/mongo-pool.js");
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
+
 
 var checkForHex = new RegExp('^[0-9a-fA-F]{24}$');
 
@@ -19,6 +21,19 @@ router.get('/departments',function(req,res) {
     mongoose.connection.db.collection('Programs', action);
 
 });
+router.get('/advisors',function(req,res) {
+    var action = function (err, collection) {
+        collection.distinct('lastName',function(err, results) {
+            if(err)
+                console.log(err);
+            else {
+                res.send(results);
+            }
+        });
+    };
+    mongoose.connection.db.collection('professors', action);
+
+});
 
 router.post('/course',function(req,res) {
 
@@ -26,7 +41,6 @@ router.post('/course',function(req,res) {
     var code = req.body.course_code;
     mongoose.connection.db.collection('Courses', function(err, items){
         items.find({"Code":code},{"_id":0,"Title":1}).toArray(function(err, results){
-            console.log(results);
             res.send(results);
             res.end();
         });
@@ -60,23 +74,28 @@ router.post('/req',function(req,res) {
 
 });
 router.post('/register',function(req,res) {
+    req.body.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null);
 
-    mongoose.connection.db.collection('Students', function (err, items) {
-        items.insertOne(
-            {
-                'name': req.body.name,
-                'Email': req.body.Email,
-                'password': req.body.password,
-                'program': req.body.program,
-                'Grades': req.body.grades
-            }, function (err, results) {
-                console.log(results)
+            mongoose.connection.db.collection('Students', function (err, items) {
+                items.insertOne(
+                    {
+                        'name': req.body.name,
+                        'Email': req.body.Email,
+                        'Password': req.body.password,
+                        'major': req.body.major,
+                        'Grades': req.body.Grades,
+                        'Advisor': req.body.Advisor
+                    }, function (err, results) {
 
-            }
-        );
+                    }
+                );
+            });
 
 
-    });
+res.redirect(('/login'))
+
+
+    //});
 });
 router.post('/checkAccount',function(req,res) {
 
@@ -98,7 +117,6 @@ router.post('/checkAccount',function(req,res) {
 });
 
 router.post('/submit_candidacy', function(req, res, next) {
-    console.log(req);
     res.send('You sent the name "' + req.body + '".');
 });
 
