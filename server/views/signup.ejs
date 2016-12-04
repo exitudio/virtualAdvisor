@@ -88,15 +88,13 @@
         $scope.student_password_confirmed=false
         $scope.student_program=null
         $scope.student_advisor=null
-        $scope.student_cores=[]
-        $scope.student_electives=[]
         $scope.cores = []
             //Once the major selected -- load all the courses
         $scope.LoadMajors=function(program)
         {
             if(program!=null)
             {
-                $scope.student_program = program._id[0];
+                $scope.student_program = program.Title[0];
                 $scope.certificate = "";
                 $scope.minor = "";
                 $scope.cores = []
@@ -257,15 +255,7 @@
         //Update the core list when the user check/uncheck the core courses list
         $scope.coreUpdate = function()
         {
-            $scope.student_cores=[];
-            for(c=0;c<$scope.cores.length;c++)
-            {
-                if($scope.cores[c].selected)
-                {
-                    $scope.student_cores.push({"core":$scope.cores[c].code,"grade":$scope.cores[c].grade})
-                }
 
-            }
         }
 
 
@@ -325,21 +315,33 @@
 
         $scope.submit=function()
         {
-            for(i=0;i<$scope.electives.length;i++)
+            $scope.student_advisor = $scope.advisor;
+            $scope.student_electives=[];
+            $scope.student_cores=[];
+            //Freeze cores
+            for(c=0;c<$scope.cores.length;c++)
+            {
+                if($scope.cores[c].selected)
+                {
+                    $scope.student_cores.push({"core":$scope.cores[c].code,"grade":$scope.cores[c].grade})
+                }
+
+            }
+            //Freeze  electives
+            for(var i=0;i<$scope.electives.length;i++)
             {
                 if($scope.electives[i].found)
-                $scope.student_electives.push({"elective":$scope.electives[i].code,"grade":$scope.electives[i].grade})
+                $scope.student_electives.push({"elective":$scope.electives[i].code.toUpperCase(),"grade":$scope.electives[i].grade})
             }
-            $scope.student_advisor = $scope.advisor;
+            //Merge the cores and electives
             Grades = []
-            for(i=0;i<$scope.student_cores.length;i++)
+            for(var i=0;i<$scope.student_cores.length;i++)
             {
-                Grades.push({i:{"Course Code":$scope.student_cores[i].code,"Grade":$scope.student_cores[i].grade}})
+                Grades.push({"Course Code":$scope.student_cores[i].core,"Grade":$scope.student_cores[i].grade})
             }
-            i=i+1;
-            for(j=0;j<$scope.student_electives.length;j++,i++)
+            for(var i = 0; i<$scope.student_electives.length;i++)
             {
-                Grades.push({i:{"Course Code":$scope.student_electives[j].code,"Grade":$scope.student_electives[j].grade}})
+                Grades.push({"Course Code":$scope.student_electives[i].elective.toUpperCase(),"Grade":$scope.student_electives[i].grade})
             }
 
                 $http.post('http://localhost:3000/api/register',
@@ -358,7 +360,7 @@
                             });
 
             }
-        //}
+
 
     });
 
@@ -434,8 +436,8 @@
             <div ng-repeat="core in cores">
 
                 <input type="checkbox" ng-model="core.selected" ng-change="coreUpdate()">{{core.code}}</input>
-                <select ng-model="core.grade" ng-show="core.selected">
-                    <option value="A">A</option>
+                <select ng-model="core.grade" ng-show="core.selected" ng-selected="A">
+                    <option value="A" ng-selected>A</option>
                     <option value="A-">A-</option>
                     <option value="B+">B+</option>
                     <option value="B">B</option>
@@ -452,7 +454,7 @@
         </div>
         <div class="form-group">
         <label>Electives</label>
-        <div ng-repeat="elective in electives">
+        <div ng-repeat="elective in electives" ng-init="elective.grade =A">
             <span ng-model="elective.name">{{elective.name}}</span>
             <input type="text" ng-model="elective.code" name="" ng-change="GetClassName(elective.id,elective.code)"  placeholder="Ex: SW 555">
             <select ng-model="elective.grade" ng-show="elective.found">

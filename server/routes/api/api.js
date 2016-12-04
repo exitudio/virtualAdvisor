@@ -76,6 +76,7 @@ router.post('/req',function(req,res) {
 router.post('/register',function(req,res) {
     req.body.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null);
 
+
             mongoose.connection.db.collection('Students', function (err, items) {
                 items.insertOne(
                     {
@@ -89,10 +90,11 @@ router.post('/register',function(req,res) {
 
                     }
                 );
+
             });
 
 
-res.redirect(('/login'))
+res.redirect(('/'))
 
 
     //});
