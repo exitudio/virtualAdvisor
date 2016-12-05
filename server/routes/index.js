@@ -209,6 +209,14 @@ router.get('/courseAdvisor',isAuthenticated, function(req, res, next) {
     res.render("courseAdvisor.ejs",{userName:userName});
 });
 
+router.get('/StudentProfile',isAuthenticated, function(req, res, next) {
+    var userName = "";
+    if( req.user && req.user._doc && req.user._doc.name){
+        userName = req.user._doc.name;
+    }
+    res.render("StudentProfile.ejs",{userName:userName});
+});
+
 //appointment
 //https://mattlewis92.github.io/angular-bootstrap-calendar/#?example=kitchen-sink
 router.get('/appointment',isAuthenticated, function(req, res, next) {
@@ -239,6 +247,27 @@ router.post('/appointment',isAuthenticated, function(req, res, next) {
         res.redirect('/appointment?error='+message);
     });
     //res.send('POST request to the homepage');
+});
+
+//Student Profile
+router.post('/UserProfile',isAuthenticated, function(req, res, next){
+    var userName = "";
+    if( req.user && req.user._doc && req.user._doc.name){
+        userName = req.user._doc.name;
+    }
+    mongoose.connection.db.collection('People', function(err, items){
+        items.find({"name":userName}).toArray(function(err, results){
+            if (results !== null)
+                {
+                    console.log("Student Profile information Received");
+                    res.send(results);
+                }
+            else{
+                console.log("Username does not exist in database");
+            }
+        })
+    })
+    
 });
 
 //candidacy

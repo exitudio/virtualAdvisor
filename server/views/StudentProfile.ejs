@@ -15,10 +15,11 @@
     <link href="assets/css/custom.css" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
     <div id="wrapper">
-        <% var menu = 2; %>
+        <% var menu = 5; %>
         <% include menu.ejs%>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
@@ -32,7 +33,65 @@
                  <!-- /. ROW  -->
 				                  <!-- /. ROW  -->
                  <hr />
-                                 
+                
+                <!-- Student Profile -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-lg">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-8 col-md-10" ng-app="userProfileApp" ng-controller="UserProfileController">
+                        <script>
+                    var app = angular.module('userProfileApp', []);
+                    app.controller('UserProfileController', function ($scope, $http){
+							$scope.profile = [];
+						     $http.post('http://localhost:3000/UserProfile'
+                                    ,'').success(function(result)
+                                    {
+                                        $scope.profile = result[0]; 
+										console.log($scope.profile.Email)
+                                    });
+					});
+			             </script>
+                        <h4>
+                            <%= userName%></h4>
+                        <small><cite title="San Francisco, USA"> San Francisco, USA <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p style="font-family:sans-serif;font-size:14pt"> Stevens ID: 10103<br>
+                            Major: Master of Science in Computer Science <br>
+                        </p>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i> BaldwinC@stevens.edu
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com"> www.virtualadvisor.com</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i> June 02, 1992</p>
+                        <!-- Split button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                Social</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span><span class="sr-only">Social</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Google +</a></li>
+                                <li><a href="#">Facebook</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Github</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--                                 
             <div class="row" ng-app="courseAdvisorApp" ng-controller="courseAdvisorController">
 			<script>
                     var app = angular.module('courseAdvisorApp', []);
@@ -58,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
    
                  <!-- /. ROW  -->       
                  <!-- /. ROW  -->
